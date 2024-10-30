@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import TeacherSidebar from './TeacherSidebar';
+import AdminSidebar from './AdminSidebar';
 
-const Teacher = () => {
+const Admin = () => {
   const [isVisible, setVisible] = useState(true);
   const toggleBar = () => {
     setVisible(!isVisible);
@@ -10,7 +10,7 @@ const Teacher = () => {
   return (
     <div className='flex'>
         <div className=''>
-            <TeacherSidebar></TeacherSidebar>
+            <AdminSidebar></AdminSidebar>
         </div>
 
         <div className='ml-12 mt-12 mr-36 w-[50%]'>
@@ -29,4 +29,4 @@ const Teacher = () => {
   );
 };
 
-export default Teacher;
+export default Admin;

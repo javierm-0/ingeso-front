@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link , useNavigate} from 'react-router-dom';
 import ucnLogo from '../assets/IsologoUCN.png';
 import iconClose from '../assets/arrow-reduce-tag.svg';
-import iconOpen from '../assets/arrow-enlarge-tag.svg';
 import iconHome from '../assets/home.svg';
 import iconUser from '../assets/profile-circle.svg';
 import iconProgram from '../assets/submit-document.svg';
@@ -18,10 +17,10 @@ const logout = () => {
 const StudentSidebar = () =>{
     const [isOpen,setIsOpen] = useState(true);
     const Menus = [
-        {title: "Inicio", icon: <img src={iconHome}/>, link: "./perfil"},
-        {title: "Perfil", icon: <img src={iconUser}/>, link: "./Historial"},
-        {title: "Visualizar encuestas", icon:<img src={iconCheck} />, link: "./setPerfil"},
-        {title: "Responder encuestas", icon: <img src={iconProgram} />, link: "/", isExitButton: true},
+        {title: "Inicio", icon: <img src={iconHome}/>, link: "/student"},
+        {title: "Perfil", icon: <img src={iconUser}/>, link: "/student/studentProfile"},
+        {title: "Visualizar encuestas", icon:<img src={iconCheck} />, link: ""},
+        {title: "Responder encuestas", icon: <img src={iconProgram} />, link: ""},
         {title: "Cerrar Sesión", spacing: true, icon: <img src={iconClose} />, link: "/", isExitButton: true},
     ];
 

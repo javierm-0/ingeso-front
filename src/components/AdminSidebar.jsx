@@ -8,6 +8,7 @@ import iconProgram from '../assets/submit-document.svg';
 import iconCheck from '../assets/doc-glass-in.svg';
 import iconAdd from '../assets/page-plus.svg'
 import { BsArrowLeftSquareFill } from "react-icons/bs";
+import { RiDashboardFill } from "react-icons/ri";
 
 //Cerrar sesion
 const logout = () => {
@@ -15,13 +16,16 @@ const logout = () => {
     localStorage.removeItem('user');
   };
 
-const TeacherSidebar = () =>{
+const AdminSidebar = () =>{
     const [isOpen,setIsOpen] = useState(true);
     const Menus = [
-        {title: "Inicio", icon: <img src={iconHome}/>, link: "/teacher"},
-        {title: "Perfil", icon: <img src={iconUser}/>, link: "/teacher/teacherProfile"},
-        {title: "Programar envio", icon: <img src={iconProgram} />, link: ""},
+        {title: "Inicio", icon: <img src={iconHome}/>, link: "/admin"},
+        {title: "Perfil", icon: <img src={iconUser}/>, link: "/admin/adminProfile"},
+        {title: "Crear encuesta", icon: <img src={iconAdd}/>, link: ""},
+        {title: "Subir fechas de envio de encuestas existentes", icon: <img src={iconProgram} />, link: ""},
         {title: "Ver Respuestas", icon:<img src={iconCheck} />, link: ""},
+        {title: "Enviar alerta a estudiantes", icon:<img src={iconProgram} />, link: ""},
+        {title: "Ver dashboard", icon:<RiDashboardFill />, link: ""},
         {title: "Cerrar Sesión", spacing: true, icon: <img src={iconClose} />, link: "/", isExitButton: true},
     ];
 
@@ -44,7 +48,7 @@ const TeacherSidebar = () =>{
                 <img src={ucnLogo} className={`text-4xl
                 rounded cursor-pointer block float-left mr-2 mb-8
                 `}/>
-                <p className='text-white font-semibold'>Nombre Docente</p>
+                <p className='text-white font-bold'>ADMIN</p>
            <ul className="pt-2">
             {Menus.map((menu, index) => (
                 <React.Fragment key={index}>
@@ -53,7 +57,7 @@ const TeacherSidebar = () =>{
                         className={`text-gray-300 text-sm flex
                         items-center gap-x-4 cursor-pointer p-2
                         hover:bg-white rounded-md 
-                        ${menu.spacing ? "mt-60":"mt-2"}`}
+                        ${menu.spacing ? "mt-24":"mt-2"}`}
                         onClick={() => menu.isExitButton ? handleLogout() : navigate(menu.link)
                         }
                     >
@@ -76,4 +80,4 @@ const TeacherSidebar = () =>{
 
 };
 
-export default TeacherSidebar;
+export default AdminSidebar;

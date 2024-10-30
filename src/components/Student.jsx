@@ -1,12 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import ucnLogo from '../assets/IsologoUCN.png';
-import iconClose from '../assets/arrow-reduce-tag.svg';
-import iconOpen from '../assets/arrow-enlarge-tag.svg';
-import iconHome from '../assets/home.svg';
-import iconUser from '../assets/profile-circle.svg';
-import iconProgram from '../assets/submit-document.svg';
-import iconCheck from '../assets/doc-glass-in.svg';
 import StudentSidebar from './StudentSidebar';
 
 const Student = () => {
