@@ -14,7 +14,7 @@ const StudentPerfil =() =>{
                 <StudentSidebar></StudentSidebar>
             </div>
 
-            <div className='ml-12 mt-12 mr-36 w-[50%]'>
+            <div className='ml-80 mt-12 mr-36 w-[50%]'>
                 <div className="flex flex-col items-center justify-center p-6">
                     <h2 className="text-2xl font-bold mb-4 text-[#164e63bb]">Perfil del Estudiante</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

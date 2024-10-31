@@ -13,7 +13,7 @@ const Admin = () => {
             <AdminSidebar></AdminSidebar>
         </div>
 
-        <div className='ml-12 mt-12 mr-36 w-[50%]'>
+        <div className='ml-80 mt-12 mr-36 w-[50%]'>
             <h2 className="text-2xl font-bold text-[#164e63bb]">¡Bienvenido/a al Sistema de Encuestas!</h2>
             <p className="mt-2 text-justify">
             El Sistema de Encuestas es una plataforma destinada a facilitar la realización y gestión de encuestas por parte de los estudiantes de la Universidad Católica del Norte que estén realizando el Magíster en Gestión Ambiental.

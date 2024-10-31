@@ -6,6 +6,7 @@ import Student from './components/Student.jsx';
 import StudentPerfil from './components/StudentPerfil.jsx';
 import Admin from './components/Admin.jsx';
 import AdminPerfil from './components/AdminPerfil.jsx';
+import ResponderEncuesta from './components/EncuestaEvaluacion.jsx';
 
 const App = () => {
 
@@ -18,6 +19,7 @@ const App = () => {
 
       <Route path="/student" element={<Student />} />
       <Route path="/student/studentProfile" element={<StudentPerfil />} />
+      <Route path="/student/responderEncuesta" element={<ResponderEncuesta />} />
 
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin/adminProfile" element={<AdminPerfil />} />

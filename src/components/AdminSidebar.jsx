@@ -21,7 +21,7 @@ const AdminSidebar = () =>{
     const Menus = [
         {title: "Inicio", icon: <img src={iconHome}/>, link: "/admin"},
         {title: "Perfil", icon: <img src={iconUser}/>, link: "/admin/adminProfile"},
-        {title: "Crear encuesta", icon: <img src={iconAdd}/>, link: ""},
+        {title: "Crear encuesta", icon: <img src={iconAdd}/>, link: "/admin/crearEncuesta"},
         {title: "Subir fechas de envio de encuestas existentes", icon: <img src={iconProgram} />, link: ""},
         {title: "Ver Respuestas", icon:<img src={iconCheck} />, link: ""},
         {title: "Enviar alerta a estudiantes", icon:<img src={iconProgram} />, link: ""},
@@ -36,10 +36,10 @@ const AdminSidebar = () =>{
       navigate('/'); // Redirige a la página de inicio
     };
 
-    return(
-        <div className="w-72">
-            <div className={`bg-[#164e63bb] h-screen p-5 pt-8 ${isOpen? "w-72":"w-28"} duration-300 relative rounded-tr-2xl`}>
-                <BsArrowLeftSquareFill className={`bg-[#3ab1b177] text-gray-200 
+    return(        
+        <div className="fixed w-72 h-screen">
+            <div className={`bg-[#164a5f] h-screen p-5 pt-8 absolute top-0 left-0 ${isOpen? "w-72":"w-28"} duration-300 rounded-tr-2xl`}>
+                <BsArrowLeftSquareFill className={`bg-[#164a5f] text-gray-200 
                 text-3xl rounded-full absolute -right-3.5 top-10 border
                 border-[#3ab1b177] cursor-pointer
                  ${!isOpen && "rotate-180"}`}
@@ -54,9 +54,9 @@ const AdminSidebar = () =>{
                 <React.Fragment key={index}>
                     <li 
                         key={index} 
-                        className={`text-gray-300 text-sm flex
+                        className={`text-white text-sm flex
                         items-center gap-x-4 cursor-pointer p-2
-                        hover:bg-white rounded-md 
+                        rounded-md 
                         ${menu.spacing ? "mt-24":"mt-2"}`}
                         onClick={() => menu.isExitButton ? handleLogout() : navigate(menu.link)
                         }
@@ -64,7 +64,7 @@ const AdminSidebar = () =>{
                         <span className="text-2xl block float-left">
                             {menu.icon ? menu.icon : <img src={iconUser} />}
                         </span>
-                        <p className={`text-base font-medium flex-1 text-[#213547]
+                        <p className={`text-base font-medium flex-1 text-white hover:font-extrabold
                             ${!isOpen && "hidden"}`}>{menu.title}
                         </p>
                     </li>

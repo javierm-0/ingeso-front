@@ -34,8 +34,8 @@ const TeacherSidebar = () =>{
 
     return(
         <div className="w-72">
-            <div className={`bg-[#164e63bb] h-screen p-5 pt-8 ${isOpen? "w-72":"w-28"} duration-300 relative rounded-tr-2xl`}>
-                <BsArrowLeftSquareFill className={`bg-[#3ab1b177] text-gray-200 
+            <div className={`bg-[#164a5f] h-screen p-5 pt-8 ${isOpen? "w-72":"w-28"} duration-300 relative rounded-tr-2xl`}>
+                <BsArrowLeftSquareFill className={`bg-[#164a5f] text-gray-200 
                 text-3xl rounded-full absolute -right-3.5 top-10 border
                 border-[#3ab1b177] cursor-pointer
                  ${!isOpen && "rotate-180"}`}
@@ -50,9 +50,9 @@ const TeacherSidebar = () =>{
                 <React.Fragment key={index}>
                     <li 
                         key={index} 
-                        className={`text-gray-300 text-sm flex
+                        className={`text-white text-sm flex
                         items-center gap-x-4 cursor-pointer p-2
-                        hover:bg-white rounded-md 
+                        rounded-md 
                         ${menu.spacing ? "mt-60":"mt-2"}`}
                         onClick={() => menu.isExitButton ? handleLogout() : navigate(menu.link)
                         }
@@ -60,7 +60,7 @@ const TeacherSidebar = () =>{
                         <span className="text-2xl block float-left">
                             {menu.icon ? menu.icon : <img src={iconUser} />}
                         </span>
-                        <p className={`text-base font-medium flex-1 text-[#213547]
+                        <p className={`text-base font-medium flex-1 text-white hover:font-extrabold
                             ${!isOpen && "hidden"}`}>{menu.title}
                         </p>
                     </li>
