@@ -1,14 +1,22 @@
 import { useState } from 'react';
 import ucnLogo from '../assets/ucnLogo.png';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Usuario:', username);
-    console.log('Contraseña:', password);
+  const navigate = useNavigate(); // Hook de react-router-dom para redirigir
+
+
+  const handleLoginClick = (evento) =>{
+    evento.preventDefault();
+    if(username === 'student' && username != password){
+      navigate("/student");
+    }
+    else{
+      alert("credencial invalida");
+    }
   };
 
   return (
@@ -18,7 +26,7 @@ const Login = () => {
         <h1 className="m-0 mb-1 text-[1.625rem] leading-tight relative top-40 font-bold text-[#213547]">¡Bienvenid@ al Sistema!</h1>
         <p className="w-[350px] text-sm leading-none text-center absolute top-[40%]">Inicie sesión para acceder a las funcionalidades del sistema</p>
 
-        <form onSubmit={handleSubmit} className="flex flex-col items-center relative top-60 w-full">
+        <form className="flex flex-col items-center relative top-60 w-full">
           <input 
             type="text" 
             placeholder="Usuario" 
@@ -26,6 +34,7 @@ const Login = () => {
             onChange={(e) => setUsername(e.target.value)} 
             required 
             className="w-[80%] p-2 my-2 border border-gray-300 bg-[#164e63bb] rounded hover:bg-[#2a7482]"
+            autoComplete="off"
           />
           <input 
             type="password" 
@@ -33,13 +42,17 @@ const Login = () => {
             value={password} 
             onChange={(e) => setPassword(e.target.value)} 
             required 
+            autoComplete="off"
+            name="lalalfafdksafkjfs"
             className="w-[80%] p-2 my-2 border border-gray-300 bg-[#164e63bb] rounded hover:bg-[#2a7482]"
           />
           <button 
             type="submit" 
             className="p-2 px-5 border-none rounded bg-[#164e63bb] text-white relative top-2 cursor-pointer hover:bg-[#1559a180]"
+            onClick={handleLoginClick}
           >
             Iniciar Sesión
+            
           </button>
         </form>
       </div>
