@@ -6,8 +6,8 @@ import Student from './components/Student.jsx';
 import StudentPerfil from './components/StudentPerfil.jsx';
 import Admin from './components/Admin.jsx';
 import AdminPerfil from './components/AdminPerfil.jsx';
-import ResponderEncuesta from './components/EncuestaEvaluacion.jsx';
-
+import EncuestaEvaluacion from './components/EncuestaEvaluacion.jsx';
+import ListadoEncuestas from './components/ListadoEncuestas.jsx';
 const App = () => {
 
   return (
@@ -19,10 +19,12 @@ const App = () => {
 
       <Route path="/student" element={<Student />} />
       <Route path="/student/studentProfile" element={<StudentPerfil />} />
-      <Route path="/student/responderEncuesta" element={<ResponderEncuesta />} />
+      <Route path='/student/elegirEncuesta/' element={<ListadoEncuestas />} />
+      <Route path="/student/elegirEncuesta/responderEncuesta" element={<EncuestaEvaluacion />} />
 
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin/adminProfile" element={<AdminPerfil />} />
+
     </Routes>
   </Router>
   );

@@ -20,7 +20,7 @@ const StudentSidebar = () =>{
         {title: "Inicio", icon: <img src={iconHome}/>, link: "/student"},
         {title: "Perfil", icon: <img src={iconUser}/>, link: "/student/studentProfile"},
         {title: "Visualizar encuestas", icon:<img src={iconCheck} />, link: ""},
-        {title: "Responder encuestas", icon: <img src={iconProgram} />, link: "/student/responderEncuesta"},
+        {title: "Responder encuestas", icon: <img src={iconProgram} />, link: "/student/elegirEncuesta"},
         {title: "Cerrar Sesión", spacing: true, icon: <img src={iconClose} />, link: "/", isExitButton: true},
     ];
 
