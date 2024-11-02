@@ -4,16 +4,17 @@ import axios from "axios";
 const DimensionCero = ({dataRelevante , onResponseUpdate}) => {
     const placeholderUserID = 1;
     const [preguntas, setPreguntas] = useState(
-        dataRelevante.items.map(item => ({ id: item.id, respuesta: "" }))
+        dataRelevante.items.map(item => ({ id: item.id, respuesta: "OPCIONAL" }))//inicializamos con opcional para saltar el control de datos para este componente
     );
 
     const handleInputChange = (id, value) => {
+        const respuesta = value.trim() === "" ? "OPCIONAL" : value;
         setPreguntas(prevPreguntas =>
             prevPreguntas.map(pregunta =>
-                pregunta.id === id ? { ...pregunta, respuesta: value } : pregunta
+                pregunta.id === id ? { ...pregunta, respuesta } : pregunta
             )
         );
-        onResponseUpdate(id, value);
+        onResponseUpdate(id, respuesta);
     };
     const handleSaveResponses = () => {
         const responsesToSave = preguntas.map(pregunta => ({
@@ -51,31 +52,3 @@ const DimensionCero = ({dataRelevante , onResponseUpdate}) => {
 };
 
 export default DimensionCero;
-
-{
-    /*
-    
-
-    <div>
-        <p className='mb-4'>
-        Dimensión 0: Identificación y Caracterización
-        </p>
-        <div className="grid grid-cols-2 mb-12">
-            <div className="border-black border-l-[1px] border-t-[1px] border-b-[1px] border-r-[1px] h-8 flex items-center justify-center">Nombre de la Asignatura</div>
-            <div className="border-black border-r-[1px] border-t-[1px] border-b-[1px] h-8 flex items-center justify-center">
-                <input className="bg-white w-full h-full text-center hover:border-black border-[1px]" placeholder="Respuesta 1" />
-            </div>
-
-            <div className="border-black border-l-[1px] border-b-[1px] border-r-[1px] h-8 flex items-center justify-center">Profesor(a) de la Asignatura</div>
-            <div className="border-black border-b-[1px] border-r-[1px] h-8 flex items-center justify-center">
-                <input className="bg-white w-full h-full text-center hover:border-black border-[1px]" placeholder="Respuesta 2" />
-            </div>
-
-            <div className="border-black border-l-[1px] border-b-[1px] border-r-[1px] h-8 flex items-center justify-center">Nombre del alumno (opcional)</div>
-            <div className="border-black border-r-[1px] border-b-[1px] h-8 flex items-center justify-center">
-                <input className="bg-white w-full h-full text-center hover:border-black border-[1px]" placeholder="Respuesta 3" />
-            </div>
-        </div>
-    </div>
-    */
-}

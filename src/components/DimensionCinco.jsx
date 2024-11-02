@@ -4,15 +4,15 @@ import { useState } from "react";
 const DimensionCinco = ({dataRelevante, onResponseUpdate}) => {
   const [notas, setNotas] = useState({});
 
-  
-
   const handleInputChange = (id, value) => {
-    const responseValue = value ? value.toString() : "SIN_RESPONDER"; // Usa "SIN_RESPONDER" si no hay respuesta
+    if(value > 7) value = 7;
+    if(value < 1) value = 1;
+    const responseValue = value ? value.toString() : "SIN_RESPONDER"; //usa "SIN_RESPONDER" si no hay respuesta
     setNotas((prev) => ({
       ...prev,
       [id]: responseValue,
     }));
-    onResponseUpdate(id, responseValue); // Llama a la función de actualización con el nuevo valor
+    onResponseUpdate(id, responseValue); //llama a la func de actualizar con la nueva data
   };
 
   return (
@@ -28,7 +28,12 @@ const DimensionCinco = ({dataRelevante, onResponseUpdate}) => {
         <tbody>
           {dataRelevante.items.map((pregunta) => (
             <tr key={pregunta.id}>
-              <td className="border border-gray-300 p-2">{pregunta.text}</td>
+              <td className="border border-gray-300 p-2">
+                {pregunta.text}
+                {notas[pregunta.id] === undefined && (
+                  <span className="text-red-600 font-extrabold">*</span>
+                )}
+              </td>
               <td className="border border-gray-300 p-2">
                 <input
                   type="number"
@@ -37,7 +42,7 @@ const DimensionCinco = ({dataRelevante, onResponseUpdate}) => {
                   className="border border-gray-300 p-1 rounded"
                   min="1"
                   max="7"
-                  required
+                  required={true}
                 />
               </td>
             </tr>

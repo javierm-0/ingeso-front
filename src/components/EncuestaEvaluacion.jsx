@@ -26,7 +26,7 @@ const options = [//esto es constante, se guardara en codigo
 const EncuestaEvaluacion = () => {
   const [responses, setResponses] = useState({
     userId: 1, // id placeholder, luego usar localStorage para inicializar aca
-    responses: [] //inicializamos como un arreglo vacío
+    responses: [] //inicializamos con un arreglo vacío
 });
 
 
@@ -43,10 +43,9 @@ const EncuestaEvaluacion = () => {
 
   const handleResponseUpdate = (itemId, answer) => {
     setResponses(prevResponses => {
-        // Verificamos si ya existe una respuesta para el itemId
+        //verificamos si ya existe una respuesta para el itemId
         const existingResponse = prevResponses.responses.find(response => response.itemId === itemId);
 
-        // Si existe, la actualizamos; si no, agregamos una nueva
         if (existingResponse) {
             return {
                 ...prevResponses,
@@ -63,17 +62,32 @@ const EncuestaEvaluacion = () => {
     });
 };
 
-  const handleSubmit = async () => {
+const handleSubmit = async () => {
+  // Validar que todas las preguntas obligatorias tengan respuestas
+  const allRequiredFilled = cuestionario.dimensions.every(dimension => {
+    return dimension.items.every(item => {
+      if (dimension.tipo === "Agreedlevel" || dimension.tipo === "Agreedlevel2" || dimension.tipo === "freetext") {
+        return responses.responses.some(response => response.itemId === item.id && response.answer !== undefined && response.answer !== "");
+      }
+      return true;//si fuese de otro tipo no se verifica, puesto que es opcional
+    });
+  });
+
+  if (!allRequiredFilled) {
+    alert("Por favor, completa todas las preguntas obligatorias.");
+    return;
+  }
+
+  //si pasa la validacion, enviar el payload
   console.log('Payload que se enviará:', JSON.stringify(responses, null, 2));
   try {
-      const response = await axios.post('http://localhost:4000/responses/', responses);
-      console.log("Responses submitted successfully:", response.data);
-      // Manejar respuesta del servidor
+    const response = await axios.post('http://localhost:4000/responses/', responses);
+    console.log("Responses submitted successfully:", response.data);
   } catch (error) {
-      console.error("Error submitting responses:", error);
-      // Manejar error
+    console.error("Error submitting responses:", error);
   }
 };
+
 
 
 
@@ -125,53 +139,3 @@ const EncuestaEvaluacion = () => {
 };
 
 export default EncuestaEvaluacion;
-
-{/*
-        <div className=''>
-            <StudentSidebar></StudentSidebar>
-        </div>
-
-        <div className='ml-80 mt-16 mr-36 w-[50%]'>
-            <HeaderEncuesta></HeaderEncuesta>
-            <p className='underline mt-3 mb-3'>
-                Estimad@ Estudiante:
-            </p>
-            <p className='mb-3'>
-            El mejoramiento de la función docente de postgrado, 
-            se constituye en uno de los ejes del sistema de calidad de la Universidad Católica del Norte, 
-            por tal razón se ha implementado un sistema de evaluación docente que permita recoger la percepción de los estudiantes 
-            frente a algunas dimensiones de esta actividad. En este contexto, 
-            la encuesta de evaluación es una forma de recibir retroalimentación y 
-            posibilitar la identificación de oportunidades de mejoramiento. 
-            </p>
-            <p className='mb-8'>
-            En consecuencia, le solicitamos responder las siguientes preguntas 
-            tendiendo en consideración el curso en el cual usted ha participado.
-            </p>
-            <DimensionCero></DimensionCero>
-            <DimensionUno></DimensionUno>
-            <DimensionCinco></DimensionCinco>
-            <DimensionSeis pregunta={"23. ¿Qué otros temas le resultarían interesantes y útiles de incluir en esta asignatura?"}
-            onRespuestaChange={handleRespuestaDim6Change} 
-            index={23}
-            ></DimensionSeis>
-            
-            <DimensionSeis pregunta={"24. Ideas para mejorar futuras versiones de esta asignatura"}
-            onRespuestaChange={handleRespuestaDim6Change} 
-            index={24}
-            ></DimensionSeis>
-
-            <DimensionSeis pregunta={"25. Incorpore cualquier otro comentario u observación que permita mejorar la calidad del programa"}
-            onRespuestaChange={handleRespuestaDim6Change} 
-            index={25}
-            ></DimensionSeis>
-
-            <button 
-                className="mb-8 ml-48 p-6 text-2xl bg-gray-950 hover:bg-gray-900 transition duration-100 transform active:scale-95 text-white rounded-md flex justify-center items-center"
-                onClick={handleCuestionarioCompleto}
-
-            >
-                Enviar Encuesta
-            </button>
-        </div>
-        */}

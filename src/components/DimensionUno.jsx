@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 
 
 
-const options = [//esto es constante, se guarda en codigo
+//esto es constante, se guarda en codigo
+const options = [
   "Muy en Desacuerdo", 
   "En desacuerdo", 
   "Ni de acuerdo ni en desacuerdo", 
@@ -25,7 +26,7 @@ const DimensionUno = ({ dataRelevante, onResponseUpdate }) => {
 
   return (
     <div className="p-4">
-      <h2 className="text-xl font-bold">Responder Encuesta: {dataRelevante.name}</h2>
+      <h2 className="text-xl font-bold">Responder Encuesta</h2>
       <table className="min-w-full border-collapse border border-gray-200">
         <thead>
           <tr>
@@ -36,9 +37,14 @@ const DimensionUno = ({ dataRelevante, onResponseUpdate }) => {
           </tr>
         </thead>
         <tbody>
-          {dataRelevante.items.map((item) => (
+          {dataRelevante.items.map((item, itemIndex) => (
             <tr key={item.id}>
-              <td className="border border-gray-300 p-2">{item.text}</td>
+              <td className="border border-gray-300 p-2">
+                {itemIndex+1 + ". " + item.text}
+                {responses[item.id] === undefined && (
+                  <span className="text-red-600 font-extrabold">*</span>
+                )}
+              </td>
               {options.map((_, index) => (
                 <td key={index} className="border border-gray-300 p-2 text-center">
                   <input 
@@ -47,6 +53,7 @@ const DimensionUno = ({ dataRelevante, onResponseUpdate }) => {
                     checked={responses[item.id] === index} 
                     onChange={() => handleSelect(item.id, index)}
                     className='form-radio w-6 h-6 accent-[#164a5f]' 
+                    required={true}
                   />
                 </td>
               ))}
@@ -55,7 +62,7 @@ const DimensionUno = ({ dataRelevante, onResponseUpdate }) => {
         </tbody>
       </table>
     </div>
-  );
+  );  
 };
 
 export default DimensionUno;
