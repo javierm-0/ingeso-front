@@ -96,20 +96,23 @@ const EncuestaEvaluacion = () => {
                   return <DimensionCero key={dimension.id} dataRelevante={dimension} onResponseUpdate={handleResponseUpdate}/>;
                 }
                 if (tipo === "Agreedlevel") {
-                  return <DimensionUno key={dimension.id} dataRelevante={dimension} />;
+                  return <DimensionUno key={dimension.id} dataRelevante={dimension} onResponseUpdate={handleResponseUpdate} />;
                 }
                 if (tipo === "Agreedlevel2") {
-                  return <DimensionCinco key={dimension.id} dataRelevante={dimension} />;
+                  return <DimensionCinco key={dimension.id} dataRelevante={dimension} onResponseUpdate={handleResponseUpdate}/>;
                 }
                 if (tipo === "freetext") {
-                  return <DimensionSeis key={dimension.id} dataRelevante={dimension} />;
+                  return <DimensionSeis key={dimension.id} dataRelevante={dimension} onResponseUpdate={handleResponseUpdate}/>;
                 }
 
                 return null; // En caso de que el tipo no coincida
               })}
-                <button onClick={handleSubmit} className="bg-blue-500 text-white p-2 rounded">
+              <div className="flex justify-center mt-4">
+                <button onClick={handleSubmit} className="bg-[#164a5f] text-white px-4 py-6 text-2xl mb-2 rounded-md hover:font-extrabold active:scale-95 hover:scale-105 transition duration-200">
                     Enviar Respuestas!!
                 </button>
+              </div>
+
             </div>
           ) : (
             <p>No se ha seleccionado un cuestionario.</p>

@@ -1,18 +1,18 @@
 import { useState } from "react";
 
-const preguntas = [
-  { id: 21, question: "¿Con qué nota calificaría la relevancia y pertinencia de esta asignatura?" },
-  { id: 22, question: "Si tuviera que colocar una nota general a la asignatura, ¿cuál sería?" },
-];
 
-const DimensionCinco = () => {
+const DimensionCinco = ({dataRelevante, onResponseUpdate}) => {
   const [notas, setNotas] = useState({});
 
-  const handleInputChange = (index, value) => {
+  
+
+  const handleInputChange = (id, value) => {
+    const responseValue = value ? value.toString() : "SIN_RESPONDER"; // Usa "SIN_RESPONDER" si no hay respuesta
     setNotas((prev) => ({
       ...prev,
-      [index]: value,
+      [id]: responseValue,
     }));
+    onResponseUpdate(id, responseValue); // Llama a la función de actualización con el nuevo valor
   };
 
   return (
@@ -21,22 +21,23 @@ const DimensionCinco = () => {
       <table className="min-w-full border-collapse border border-gray-200 mt-4">
         <thead>
           <tr>
-            <th className="border border-gray-300 p-2">Dimension Cinco</th>
+            <th className="border border-gray-300 p-2">Pregunta</th>
             <th className="border border-gray-300 p-2">Notas</th>
           </tr>
         </thead>
         <tbody>
-          {preguntas.map((pregunta, index) => (
-            <tr key={index}>
-              <td className="border border-gray-300 p-2">{pregunta.question}</td>
+          {dataRelevante.items.map((pregunta) => (
+            <tr key={pregunta.id}>
+              <td className="border border-gray-300 p-2">{pregunta.text}</td>
               <td className="border border-gray-300 p-2">
                 <input
                   type="number"
-                  value={notas[pregunta.id] || ''} // Cambié index por pregunta.id para mantener la clave única
+                  value={notas[pregunta.id] || ''}
                   onChange={(e) => handleInputChange(pregunta.id, e.target.value)}
                   className="border border-gray-300 p-1 rounded"
                   min="1"
                   max="7"
+                  required
                 />
               </td>
             </tr>

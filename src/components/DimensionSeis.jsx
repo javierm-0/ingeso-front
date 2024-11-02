@@ -1,35 +1,31 @@
 import { useState } from "react";
 
-const DimensionSeis = ({pregunta}) => {
-    const [respuesta, setRespuesta] = useState('');
+const DimensionSeis = ({ dataRelevante, onResponseUpdate }) => {
+    // Inicializa un objeto para almacenar respuestas por cada pregunta
+    const [respuestas, setRespuestas] = useState({});
 
-    const handleChange = (value) => {
-        setRespuesta(value);
-        onRespuestaChange(index, value);
+    const handleChange = (id, value) => {
+        setRespuestas((prev) => ({
+            ...prev,
+            [id]: value,
+        }));
+        onResponseUpdate(id, value); // Envía la respuesta al componente padre
     };
 
     return (
         <div className="p-4">
-            <table className="min-w-full border-collapse border border-gray-200 mt-2">
-                <tbody>
-                    <tr>
-                        <td className="border border-gray-300 p-2">
-                            {pregunta}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className="">
-                            <textarea
-                                type="text"
-                                value={respuesta}
-                                onChange={(e) => setRespuesta(e.target.value)}
-                                className="border border-transparent w-full min-h-full h-24 flex items-center"
-                                placeholder="Escribe tu respuesta..."
-                            />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <h2 className="text-xl font-bold">Respuestas Abiertas</h2>
+            {dataRelevante.items.map((pregunta) => (
+                <div key={pregunta.id} className="mb-4">
+                    <p className="font-semibold">{pregunta.text}</p>
+                    <textarea
+                        value={respuestas[pregunta.id] || ''}
+                        onChange={(e) => handleChange(pregunta.id, e.target.value)}
+                        className="border border-gray-300 w-full min-h-[100px] p-2"
+                        placeholder="Escribe tu respuesta..."
+                    />
+                </div>
+            ))}
         </div>
     );
 };
