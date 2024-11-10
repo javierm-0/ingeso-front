@@ -48,7 +48,7 @@ const Login = () => {
           />
           <button 
             type="submit" 
-            className="p-2 px-5 border-none rounded bg-[#164e63bb] text-white relative top-2 cursor-pointer hover:bg-[#1559a180]"
+            className="p-2 px-5 border-none rounded bg-[#00001a] text-white relative top-2 cursor-pointer hover:bg-[#1559a180] active:font-extrabold"
             onClick={handleLoginClick}
           >
             Iniciar Sesión

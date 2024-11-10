@@ -126,6 +126,11 @@ const handleSubmit = async () => {
                     Enviar Respuestas!!
                 </button>
               </div>
+              <div>
+                <p className='font-bold flex justify-center mb-4 mt-2'>
+                  ¡Muchas Gracias por su respuesta!
+                </p>
+              </div>
 
             </div>
           ) : (
