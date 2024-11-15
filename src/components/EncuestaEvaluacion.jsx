@@ -8,7 +8,9 @@ import DimensionCinco from './DimensionCinco';
 import DimensionSeis from './DimensionSeis';
 import StudentSidebar from './StudentSidebar';
 import axios from 'axios';
-
+import Tostadas from './Tostadas';
+import { ToastContainer } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
 
 import { useLocation } from 'react-router-dom';
 
@@ -34,7 +36,7 @@ const EncuestaEvaluacion = () => {
   const location = useLocation();
   const { cuestionario } = location.state || {};
 
-
+  const navigate = useNavigate(); // Hook de react-router-dom para redirigir
 
 
   const [dimensionCeroData, setDimensionCeroData] = useState([]);
@@ -74,7 +76,7 @@ const handleSubmit = async () => {
   });
 
   if (!allRequiredFilled) {
-    alert("Por favor, completa todas las preguntas obligatorias.");
+    Tostadas.ToastWarning("Por favor, completa todas las preguntas obligatorias.");
     return;
   }
 
@@ -83,8 +85,15 @@ const handleSubmit = async () => {
   try {
     const response = await axios.post('http://localhost:4000/responses/', responses);
     console.log("Responses submitted successfully:", response.data);
+    Tostadas.ToastSuccess("Respuestas enviadas con éxito");
+    setTimeout(() => {
+      navigate(`/student/elegirEncuesta/`) //retrocede
+      console.log("retrocede");
+    }, 2000); //2 segundos
+
   } catch (error) {
     console.error("Error submitting responses:", error);
+    Tostadas.ToastError("Error durante el envio de cuestionario, intente más tarde");
   }
 };
 
@@ -138,7 +147,7 @@ const handleSubmit = async () => {
           )}
         </div>
       </div>
-
+        <ToastContainer/>
       </div>
   );
 };
