@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import DataTable from 'react-data-table-component';
 import axios from 'axios';
 import StudentSidebar from './StudentSidebar';
 import { useNavigate } from 'react-router-dom';
-
+import { RingLoader } from 'react-spinners';
 
 /**
  * @typedef {Object} Item
@@ -26,11 +27,9 @@ import { useNavigate } from 'react-router-dom';
  * @property {Dimension[]} dimensions - Un arreglo de dimensiones en el cuestionario.
  */
 
-
-
 const ListadoEncuestas = () => {
     const [jsonCuestionarios, setJsonCuestionarios] = useState([]);//json legendario que contiene todos los cuestionarios
-    const [jsonCuestionarioSeleccionado,setJsonCuestionarioSeleccionado] = useState(null);
+    const [jsonCuestionarioSeleccionado, setJsonCuestionarioSeleccionado] = useState(null);
     const navigate = useNavigate();
     
     useEffect(() => {
@@ -48,39 +47,79 @@ const ListadoEncuestas = () => {
         
     const manejarSeleccion = (id) => {
         // Encontrar el cuestionario seleccionado por ID
-        const encuestaElegida = jsonCuestionarios.find(c=>c.id === id);
+        const encuestaElegida = jsonCuestionarios.find(c => c.id === id);
         setJsonCuestionarioSeleccionado(encuestaElegida);
-        //alert("haz seleccionado un cuestionario: "+encuestaElegida.title);
-        navigate(`/student/elegirEncuesta/responderEncuesta`, { state: { cuestionario: encuestaElegida } }); // Redirigimos
+        navigate(`/student/elegirEncuesta/responderEncuesta`, { state: { cuestionario: encuestaElegida } });
     };
 
+    const columns = [
+        {
+            name: 'Título',
+            selector: row => row.title,
+            sortable: true,
+            width: '750px',
+            cell: row => (
+                <div className="font-bold">
+                    {row.title}
+                </div>
+            ),
+        },
+        {
+            name: 'Acción',
+            button: true,
+            width: '150px',
+            cell: row => (
+                <button
+                    className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+                    onClick={() => manejarSeleccion(row.id)}
+                >
+                    Responder
+                </button>
+            ),
+        },
+    ];
+
+    const customStyles = {
+        headCells: {
+            style: {
+                backgroundColor: '#164a5f',
+                color: 'white',
+                fontWeight: 'bold',
+            },
+        },
+        table: {
+            width: '100%',
+            tableLayout: 'fixed',
+        },
+    };
     
     return (
-        <div className='flex'>
-            <div className=''>
-                <StudentSidebar></StudentSidebar>
+        <div className="flex">
+            <div>
+                <StudentSidebar />
             </div>
 
-            <div className='ml-80 mt-16 mr-36 w-[50%]'>
-                <div className="max-w-md mx-auto mt-10 p-4 bg-white shadow-lg rounded-lg">
-                    <h2 className="text-4xl text-[#213547] font-bold text-center mb-4">Todas las encuestas</h2>
-                    <ul className="space-y-2">
-                        {jsonCuestionarios.map(cuestionario => (
-                            <li key={cuestionario.id}>
-                                <button 
-                                    className="w-full px-4 py-8 text-2xl mb-8 bg-[#164a5f] text-white rounded hover:font-extrabold hover:scale-105 active:scale-95 transition duration-200"
-                                    onClick={() => manejarSeleccion(cuestionario.id)}
-                                >
-                                    {cuestionario.title}
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+            <div className="ml-[340px] mt-[30px] mr-36 w-full max-w-[900px] rounded-[10px]">
+                <DataTable
+                    title={<span className="text-3xl text-[#164a5f] font-bold">Listado de Cuestionarios</span>}
+                    columns={columns}
+                    data={jsonCuestionarios}
+                    progressPending={!jsonCuestionarios.length}
+                    pagination
+                    highlightOnHover
+                    pointerOnHover
+                    noDataComponent="No se encontraron cuestionarios"
+                    customStyles={customStyles}
+                    progressComponent={
+                        <div className="flex flex-col items-center justify-center mt-[180px]">
+                        <RingLoader color="#164a5f" size={50} /> 
+                        <div className="mt-2 font-bold">Cargando, por favor espere...</div>
+                    </div>
+                    }
+                />
             </div>
         </div>
     );
 };
-
 
 export default ListadoEncuestas;
