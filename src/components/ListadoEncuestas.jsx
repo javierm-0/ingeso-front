@@ -5,6 +5,28 @@ import StudentSidebar from './StudentSidebar';
 import { useNavigate } from 'react-router-dom';
 import { RingLoader } from 'react-spinners';
 
+/**
+ * @typedef {Object} Item
+ * @property {number} id - El ID del item.
+ * @property {string} text - El texto del item.
+ */
+
+/**
+ * @typedef {Object} Dimension
+ * @property {number} id - El ID de la dimensión.
+ * @property {string} name - El nombre de la dimensión.
+ * @property {string} tipo - El tipo de la dimensión.
+ * @property {Item[]} items - Un arreglo de items en esta dimensión.
+ */
+
+/**
+ * @typedef {Object} Cuestionario
+ * @property {number} id - El ID del cuestionario.
+ * @property {string} title - El título del cuestionario.
+ * @property {string} description - La descripción del cuestionario.
+ * @property {Dimension[]} dimensions - Un arreglo de dimensiones en el cuestionario.
+ */
+
 const ListadoEncuestas = () => {
     const [jsonCuestionarios, setJsonCuestionarios] = useState([]);//json legendario que contiene todos los cuestionarios
     const [jsonCuestionarioSeleccionado, setJsonCuestionarioSeleccionado] = useState(null);
