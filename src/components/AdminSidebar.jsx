@@ -24,7 +24,6 @@ const AdminSidebar = () =>{
         {title: "Crear encuesta", icon: <img src={iconAdd}/>, link: "/admin/crearEncuesta"},
         {title: "Subir fechas de envio de encuestas existentes", icon: <img src={iconProgram} />, link: ""},
         {title: "Ver Respuestas", icon:<img src={iconCheck} />, link: ""},
-        {title: "Enviar alerta a estudiantes", icon:<img src={iconProgram} />, link: ""},
         {title: "Ver dashboard", icon:<RiDashboardFill />, link: ""},
         {title: "Cerrar Sesión", spacing: true, icon: <img src={iconClose} />, link: "/", isExitButton: true},
     ];
@@ -57,14 +56,14 @@ const AdminSidebar = () =>{
                         className={`text-white text-sm flex
                         items-center gap-x-4 cursor-pointer p-2
                         rounded-md 
-                        ${menu.spacing ? "mt-24":"mt-2"}`}
+                        ${menu.spacing ? "mt-24 bottom-2 absolute":"mt-2"}`}
                         onClick={() => menu.isExitButton ? handleLogout() : navigate(menu.link)
                         }
                     >
                         <span className="text-2xl block float-left">
                             {menu.icon ? menu.icon : <img src={iconUser} />}
                         </span>
-                        <p className={`text-base font-medium flex-1 text-white hover:font-extrabold
+                        <p className={`text-base font-medium flex-1 text-white hover:text-blue-400
                             ${!isOpen && "hidden"}`}>{menu.title}
                         </p>
                     </li>

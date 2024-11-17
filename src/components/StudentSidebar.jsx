@@ -19,7 +19,6 @@ const StudentSidebar = () =>{
     const Menus = [
         {title: "Inicio", icon: <img src={iconHome}/>, link: "/student"},
         {title: "Perfil", icon: <img src={iconUser}/>, link: "/student/studentProfile"},
-        {title: "Visualizar encuestas", icon:<img src={iconCheck} />, link: ""},
         {title: "Responder encuestas", icon: <img src={iconProgram} />, link: "/student/elegirEncuesta"},
         {title: "Cerrar Sesión", spacing: true, icon: <img src={iconClose} />, link: "/", isExitButton: true},
     ];
@@ -51,15 +50,15 @@ const StudentSidebar = () =>{
                         key={index} 
                         className={`text-white text-sm flex
                         items-center gap-x-4 cursor-pointer p-2
-                        rounded-md 
-                        ${menu.spacing ? "mt-60":"mt-2"}`}
+                        rounded-md
+                        ${menu.spacing ? "mt-60 bottom-2 absolute":"mt-2"}`}
                         onClick={() => menu.isExitButton ? handleLogout() : navigate(menu.link)
                         }
                     >
                         <span className="text-2xl block float-left">
                             {menu.icon ? menu.icon : <img src={iconUser} />}
                         </span>
-                        <p className={`text-base font-medium flex-1 text-white hover:font-extrabold
+                        <p className={`text-base font-medium flex-1 text-white hover:text-blue-400
                             ${!isOpen && "hidden"}`}>{menu.title}
                         </p>
                     </li>
