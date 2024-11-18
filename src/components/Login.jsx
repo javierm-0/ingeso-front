@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
 import ucnLogo from '../assets/ucnLogo.png';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -21,6 +21,46 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const navigate = useNavigate(); // Hook de react-router-dom para redirigir
+
+
+  const checkAccessToken = async () => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      console.log("hay access token: " + accessToken);
+      try {
+        const decodedToken = jwtDecode(accessToken);
+        if (decodedToken.exp * 1000 > Date.now()) {
+          const userId = decodedToken.sub;
+          const response = await axios.get(`http://localhost:3000/user/${userId}`);
+          const user = response.data;
+          localStorage.setItem('userData', JSON.stringify(user));
+          console.log("Token válido, redirigiendo...");
+          // Si el rol está presente, redirigimos según el rol
+          if (user.role === 'admin') {
+            navigate('/admin');
+          } else if (user.role === 'teacher') {
+            navigate('/teacher');
+          } else if (user.role === 'student') {
+            navigate('/student');
+          } else {
+            Tostadas.ToastWarning(`Rol de usuario no reconocido: ${user.role}`);
+          }
+        } else {
+          Tostadas.ToastError("Token expirado.");
+        }
+      } catch (error) {
+        console.error("Error al decodificar el token o al obtener los datos del usuario: ", error);
+        Tostadas.ToastError("Token inválido o error al obtener los datos del usuario.");
+      }
+    }
+  };
+
+  // Llamar a checkAccessToken cuando el componente se monta
+  useEffect(() => {
+    checkAccessToken();
+  }, []);
+  
+
 
   const handleLoginClick = async (evento) =>{
     evento.preventDefault();
