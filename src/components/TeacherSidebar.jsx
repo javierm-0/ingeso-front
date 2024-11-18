@@ -11,8 +11,8 @@ import { BsArrowLeftSquareFill } from "react-icons/bs";
 
 //Cerrar sesion
 const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('userData');
   };
 
 const TeacherSidebar = () =>{

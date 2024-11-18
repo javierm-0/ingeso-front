@@ -24,14 +24,18 @@ const Login = () => {
 
 
   const checkAccessToken = async () => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) {
-      console.log("hay access token: " + accessToken);
+    const AccessToken = localStorage.getItem('accessToken');
+    if (AccessToken) {
+      console.log("hay access token: " + AccessToken);
       try {
-        const decodedToken = jwtDecode(accessToken);
+        const decodedToken = jwtDecode(AccessToken);
         if (decodedToken.exp * 1000 > Date.now()) {
           const userId = decodedToken.sub;
-          const response = await axios.get(`http://localhost:3000/user/${userId}`);
+          const response = await axios.get(`http://localhost:3000/user/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${AccessToken}` //con esto parchamos una vulnerabilidad epicamente
+            }
+          });
           const user = response.data;
           localStorage.setItem('userData', JSON.stringify(user));
           console.log("Token válido, redirigiendo...");
@@ -87,7 +91,11 @@ const Login = () => {
         //teniendo userId usamos el endpoint para obtener obj user
         console.log("Access: "+AccessToken);
         try {
-          const req = await axios.get(`http://localhost:3000/user/${userId}`);
+          const req = await axios.get(`http://localhost:3000/user/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${AccessToken}` //con esto parchamos una vulnerabilidad epicamente
+            }
+          });
           const user = req.data;
           console.log(user);
           localStorage.setItem('userData',JSON.stringify(user));

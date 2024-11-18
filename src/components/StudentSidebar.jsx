@@ -10,8 +10,8 @@ import { BsArrowLeftSquareFill } from "react-icons/bs";
 
 //Cerrar sesion
 const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('userData');
   };
 
 const StudentSidebar = () =>{
@@ -29,6 +29,8 @@ const StudentSidebar = () =>{
       logout(); // Cierra la sesión
       navigate('/'); // Redirige a la página de inicio
     };
+
+
 
     return(
         <div className="fixed w-72 h-screen">

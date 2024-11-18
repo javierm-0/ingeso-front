@@ -12,8 +12,8 @@ import { RiDashboardFill } from "react-icons/ri";
 
 //Cerrar sesion
 const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('userData');
   };
 
 const AdminSidebar = () =>{
