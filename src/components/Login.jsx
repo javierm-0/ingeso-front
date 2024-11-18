@@ -1,22 +1,114 @@
 import { useState } from 'react';
 import ucnLogo from '../assets/ucnLogo.png';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Tostadas from './Tostadas';
+import { ToastContainer } from 'react-toastify';
+import { jwtDecode } from "jwt-decode";
+
+
+/**
+ * @typedef {Object} User
+ * @property {string} firstName - El nombre del usuario
+ * @property {string} lastName - El apellido del usuario
+ * @property {string} email - El correo electrónico del usuario
+ * @property {string} rut - El RUT del usuario
+ * @property {string} role - El rol del usuario
+ */
 
 const Login = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const navigate = useNavigate(); // Hook de react-router-dom para redirigir
 
-
-  const handleLoginClick = (evento) =>{
+  const handleLoginClick = async (evento) =>{
     evento.preventDefault();
-    if(username === 'student' && username != password){
-      navigate("/student");
+
+    if (!email || !password) {
+      Tostadas.ToastInfo("Por favor ingrese correo y contraseña.");
+      return;
     }
-    else{
-      alert("credencial invalida");
+
+    try {
+      //axios request
+      const response = await axios.post('http://localhost:3000/auth/login', {
+        email: email,
+        password: password,
+      });
+      if (response.status === 201) {
+        //201 es good, dice created, probablemente sea el access token lo que fue creado
+      
+        localStorage.setItem('accessToken', response.data.access_token); 
+        const AccessToken = localStorage.getItem('accessToken');
+        const decodedToken = jwtDecode(AccessToken);
+        const userId = decodedToken.sub;//sub es el id del usuario
+
+        //teniendo userId usamos el endpoint para obtener obj user
+        console.log("Access: "+AccessToken);
+        try {
+          const req = await axios.get(`http://localhost:3000/user/${userId}`);
+          const user = req.data;
+          console.log(user);
+          localStorage.setItem('userData',JSON.stringify(user));
+          Tostadas.ToastSuccess("Ha logrado ingresar, felicidades");
+          const USERDATA = JSON.parse(localStorage.getItem('userData'));
+          if(USERDATA)
+          {
+            if (USERDATA.role === 'admin') 
+              {
+                Tostadas.ToastSuccess("¡Bienvenido Administrador!");
+                setTimeout(() => {
+                  navigate('/admin');
+                }, 1300);
+              } 
+            else if (USERDATA.role === 'teacher') 
+              {
+                Tostadas.ToastSuccess("¡Bienvenido Profesor!");
+                setTimeout(() => {
+                  navigate('/teacher');
+                }, 1300);
+              } 
+            else if (USERDATA.role === 'student')
+              {
+                Tostadas.ToastSuccess("¡Bienvenido Estudiante!");
+                setTimeout(() => {
+                  navigate('/student');
+                }, 1300);
+              } 
+            else 
+              {
+                Tostadas.ToastWarning(`Rol de usuario no reconocido. ${USERDATA.role}`);
+              }
+            }
+        } catch (error) {
+          console.error("Error al obtener los datos del usuario: ", error);
+          Tostadas.ToastError("Error al obtener los datos del usuario: ", error);
+        }
+
+        
+
+      } else {
+        //goodn't
+        Tostadas.ToastWarning("Credenciales inválidas o error en el servidor.");
+        console.log("wut: "+response.status);
+      }
+      //errores
+    } catch (error) {
+      if (error.response) {
+        // El servidor respondio con un codigo de estado fuera del rango 2xx
+        Tostadas.ToastError("Credenciales inválidas: ");
+        console.log("que paso: "+error);
+      } else if (error.request) {
+        //No se recibio respuesta del servidor(timeout)
+        Tostadas.ToastError("Hubo un error en la conexión con el servidor. ");
+        console.log("error: "+error.request);
+      } else {
+        //que pasa realmente
+        Tostadas.ToastError("Ocurrió un error inesperado. \n"+error);
+      }
     }
+  
   };
 
   return (
@@ -30,9 +122,9 @@ const Login = () => {
           <form className="flex flex-col items-center relative top-60 w-full">
             <input 
               type="text" 
-              placeholder="Usuario" 
-              value={username} 
-              onChange={(e) => setUsername(e.target.value)} 
+              placeholder="Correo" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
               required 
               className="w-[80%] p-2 my-2 border border-gray-300 bg-[#164e63bb] rounded hover:bg-[#2a7482]"
               autoComplete="off"
@@ -58,6 +150,7 @@ const Login = () => {
           </form>
         </div>
       </div>
+      <ToastContainer></ToastContainer>
     </div>
   );
 };

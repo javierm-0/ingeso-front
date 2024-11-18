@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import AdminSidebar from "./AdminSidebar";
 
 const AdminPerfil =() =>{
-    const [añoIngreso,setAñoIngreso] = useState('0000');
-    const [rut,setRut] = useState('00.000.000-0');
-    const [nombre,setNombre] = useState('ADMIN');
+    
+    const [rut,setRut] = useState('');
+    const [nombre,setNombre] = useState('');
+
+    useEffect(() => {
+        const USERDATA = JSON.parse(localStorage.getItem('userData'));
+        if (USERDATA) {
+          setRut(USERDATA.rut);
+          setNombre(USERDATA.firstName);
+        }
+      }, []);
 
     
 
@@ -25,10 +33,6 @@ const AdminPerfil =() =>{
                         <div className="bg-white shadow-lg rounded-lg p-4">
                             <h3 className="font-semibold">RUT</h3>
                             <p className="text-lg">{rut}</p>
-                        </div>
-                        <div className="bg-white shadow-lg rounded-lg p-4">
-                            <h3 className="font-semibold">Año de Ingreso</h3>
-                            <p className="text-lg">{añoIngreso}</p>
                         </div>
                     </div>
                 </div>
