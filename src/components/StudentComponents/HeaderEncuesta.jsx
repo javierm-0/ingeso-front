@@ -1,5 +1,5 @@
 import React from 'react';
-import logoUCN from '../assets/logoUCN2.png';
+import logoUCN from '../../assets/logoUCN2.png';
 
 const HeaderEncuesta = ({ leftContent, rightContent }) => {
     return (

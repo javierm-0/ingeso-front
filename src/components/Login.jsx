@@ -2,7 +2,7 @@ import { useState ,useEffect} from 'react';
 import ucnLogo from '../assets/ucnLogo.png';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Tostadas from './Tostadas';
+import Tostadas from './zSharedComponents/Tostadas';
 import { ToastContainer } from 'react-toastify';
 import { jwtDecode } from "jwt-decode";
 
@@ -72,6 +72,11 @@ const Login = () => {
     if (!email || !password) {
       Tostadas.ToastInfo("Por favor ingrese correo y contraseña.");
       return;
+    }
+
+    if(localStorage.getItem('userData') ||localStorage.getItem('accessToken')){
+      console.log("hay data residual...limpiando");
+      localStorage.clear();//antes de logear, limpiar data residual de otra sesion
     }
 
     try {

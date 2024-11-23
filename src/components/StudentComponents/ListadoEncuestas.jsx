@@ -5,6 +5,8 @@ import StudentSidebar from './StudentSidebar';
 import { useNavigate } from 'react-router-dom';
 import { RingLoader } from 'react-spinners';
 
+
+//ESTE COMPONENTE ES SOLO PARA ESTUDIANTES(no mover de la carpeta StudentComponents xd)
 /**
  * @typedef {Object} Item
  * @property {number} id - El ID del item.

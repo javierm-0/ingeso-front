@@ -1,14 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import AdminSidebar from './AdminSidebar';
-import logoUCN from '../assets/logoUCN2.png';
+import logoUCN from '../../assets/logoUCN2.png';
 import HeaderEncuesta from './HeaderEncuesta';
-import DimensionCero from './DimensionCero';
-import DimensionUno from './DimensionUno';
-import DimensionCinco from './DimensionCinco';
-import DimensionSeis from './DimensionSeis';
+import DimensionCero from '../zSharedComponents/DimensionCero';
+import DimensionUno from '../zSharedComponents/DimensionUno';
+import DimensionCinco from '../zSharedComponents/DimensionCinco';
+import DimensionSeis from '../zSharedComponents/DimensionSeis';
 import StudentSidebar from './StudentSidebar';
 import axios from 'axios';
-import Tostadas from './Tostadas';
+import Tostadas from '../zSharedComponents/Tostadas';
 import { ToastContainer } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 
