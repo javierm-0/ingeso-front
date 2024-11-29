@@ -13,6 +13,7 @@ import Logout from './components/zSharedComponents/Logout.js';
 import { AuthProvider } from './context/AuthContext.jsx';
 import ProtectedRoute from './components/zSharedComponents/ProtectedRoute.jsx';
 import AccessDenied from './components/zSharedComponents/AccessDenied.jsx';
+import SurveyBuilder from './components/AdminComponents/CrearEncuestaComponents/SurveyBuilder.jsx';
 
 const App = () => {
 
@@ -42,7 +43,8 @@ const App = () => {
             <ProtectedRoute allowedRoles={['admin']}><Admin /></ProtectedRoute>} />
           <Route path="/admin/adminProfile" element={
             <ProtectedRoute allowedRoles={['admin']}><AdminPerfil /></ProtectedRoute>} />
-
+          <Route path="/admin/crearEncuesta" element={
+            <ProtectedRoute allowedRoles={['admin']}><SurveyBuilder /></ProtectedRoute>} />
           
           <Route path="*" element={<Login></Login>} />
 
