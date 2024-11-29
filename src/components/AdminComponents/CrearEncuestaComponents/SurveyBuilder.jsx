@@ -4,6 +4,7 @@ import MultipleChoiceEditable from './MultipleChoiceEditable';
 import OpenQuestionLongEditable from './OpenQuestionLongEditable';
 import HeaderEncuesta from '../../StudentComponents/HeaderEncuesta';
 import NumericScaleEditable from './NumericScaleEditable';
+import axios from 'axios';
 
 const SurveyBuilder = () => {
   const [title, setTitle] = useState('');
@@ -71,7 +72,7 @@ const SurveyBuilder = () => {
   };
   
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Agrupar preguntas según el tipo seleccionado
     const groupedQuestions = {
       Agreedlevel: [],
@@ -110,6 +111,18 @@ const SurveyBuilder = () => {
     };
   
     console.log('Survey JSON:', JSON.stringify(surveyJSON, null, 2));
+    try {
+      // Llamada a la API usando axios
+      const response = await axios.post('http://localhost:4000/surveys', surveyJSON, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      console.log('Respuesta del backend:', response.data);
+    } catch (error) {
+      console.error('Error al enviar la encuesta:', error);
+    }
+
   };
   
   
