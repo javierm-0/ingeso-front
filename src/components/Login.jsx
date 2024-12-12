@@ -45,6 +45,7 @@ const Login = () => {
           } else if (user.role === 'teacher') {
             navigate('/teacher');
           } else if (user.role === 'student') {
+            console.log("student log: ",userId);
             navigate('/student');
           } else {
             Tostadas.ToastWarning(`Rol de usuario no reconocido: ${user.role}`);

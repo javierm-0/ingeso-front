@@ -112,7 +112,7 @@ const SurveyBuilder = () => {
   
     console.log('Survey JSON:', JSON.stringify(surveyJSON, null, 2));
     try {
-      // Llamada a la API usando axios
+      //llamada a la API usando axios
       const response = await axios.post('http://localhost:4000/surveys', surveyJSON, {
         headers: {
           'Content-Type': 'application/json',

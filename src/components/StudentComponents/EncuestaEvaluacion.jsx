@@ -12,7 +12,36 @@ import { ToastContainer } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 
 import { useLocation } from 'react-router-dom';
+import { jwtDecode } from "jwt-decode";
 
+//llamada a localstorage accessToken
+function getAccessToken() {
+  return localStorage.getItem('accessToken');
+}
+
+//obtener el userId del token
+function getUserIdFromToken() {
+  const accessToken = getAccessToken();
+  if (accessToken) {
+    console.log("Hay access token: " + accessToken);
+    try {
+      const decodedToken = jwtDecode(accessToken);
+      if (decodedToken.exp * 1000 > Date.now()) {
+        console.log("userId: ",decodedToken.sub);
+        return decodedToken.sub;  // Devuelve el userId (sub) del token
+      } else {
+        console.log("El token ha expirado");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error al decodificar el token: ", error);
+      return null;
+    }
+  } else {
+    console.log("No hay access token disponible");
+    return null;
+  }
+}
 
 
 const options = [//esto es constante, se guardara en codigo
@@ -26,11 +55,19 @@ const options = [//esto es constante, se guardara en codigo
 
 const EncuestaEvaluacion = () => {
   const [responses, setResponses] = useState({
-    userId: 1, // id placeholder, luego usar localStorage para inicializar aca
+    userId: null, 
     responses: [] //inicializamos con un arreglo vacío
 });
 
-
+  useEffect(() => {
+    const userId = getUserIdFromToken();//inicializar el userId a partir del token
+    if (userId) {
+      setResponses((prevResponses) => ({
+        ...prevResponses,
+        userId: userId
+      }));
+    }
+  }, []);
   
   const location = useLocation();
   const { cuestionario } = location.state || {};
