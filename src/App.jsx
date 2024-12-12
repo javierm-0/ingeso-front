@@ -15,6 +15,9 @@ import ProtectedRoute from './components/zSharedComponents/ProtectedRoute.jsx';
 import AccessDenied from './components/zSharedComponents/AccessDenied.jsx';
 import SurveyBuilder from './components/AdminComponents/CrearEncuestaComponents/SurveyBuilder.jsx';
 
+import StudentList from './components/AdminComponents/AsignarAsignaturaEnEstudiante/StudentList.jsx'
+import AsignarAsignatura from './components/AdminComponents/AsignarAsignaturaEnEstudiante/AsignarAsignatura.jsx';
+
 const App = () => {
 
   return (
@@ -45,13 +48,17 @@ const App = () => {
             <ProtectedRoute allowedRoles={['admin']}><AdminPerfil /></ProtectedRoute>} />
           <Route path="/admin/crearEncuesta" element={
             <ProtectedRoute allowedRoles={['admin']}><SurveyBuilder /></ProtectedRoute>} />
+          <Route path="/admin/elegirEstudiante" element={
+            <ProtectedRoute allowedRoles={['admin']}><StudentList/></ProtectedRoute>} />
           
+          <Route path="/admin/elegirEstudiante/asignarAsignatura" element={
+            <ProtectedRoute allowedRoles={['admin']}><AsignarAsignatura/></ProtectedRoute>} />
           <Route path="*" element={<Login></Login>} />
 
         </Routes>
       </AuthProvider>
     </Router>
-  );
+  );  
 };
 
 export default App

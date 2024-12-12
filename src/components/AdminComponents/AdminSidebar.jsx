@@ -24,6 +24,7 @@ const AdminSidebar = () =>{
         {title: "Crear encuesta", icon: <img src={iconAdd}/>, link: "/admin/crearEncuesta"},
         {title: "Subir fechas de envio de encuestas existentes", icon: <img src={iconProgram} />, link: ""},
         {title: "Ver Respuestas", icon:<img src={iconCheck} />, link: ""},
+        {title: "Asignar Asignaturas en Estudiantes", icon:<img src={iconAdd} />, link: "/admin/elegirEstudiante"},
         {title: "Ver dashboard", icon:<RiDashboardFill />, link: ""},
         {title: "Cerrar Sesión", spacing: true, icon: <img src={iconClose} />, link: "/", isExitButton: true},
     ];
