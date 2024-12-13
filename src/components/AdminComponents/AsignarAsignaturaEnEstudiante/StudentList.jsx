@@ -71,11 +71,19 @@ const StudentList = () => {
               </p>
 
               <button
-                onClick={() => handleStudentClick(student)}
+                onClick={() => navigate('/admin/elegirEstudiante/asignarAsignatura', { state: { student } })}
                 className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
               >
                 Asignar Asignaturas
               </button>
+
+              <button
+                onClick={() => navigate('/admin/elegirEstudiante/quitarAsignatura', { state: { student } })}
+                className="mt-2 ml-4 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 active:scale-95"
+              >
+                Ir a eliminar asignatura
+              </button>
+
             </div>
           ))}
         </div>
