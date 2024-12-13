@@ -72,7 +72,7 @@ const StudentList = () => {
 
               <button
                 onClick={() => navigate('/admin/elegirEstudiante/asignarAsignatura', { state: { student } })}
-                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 active:scale-95"
               >
                 Asignar Asignaturas
               </button>

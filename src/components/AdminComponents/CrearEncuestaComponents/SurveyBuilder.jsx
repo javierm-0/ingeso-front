@@ -5,6 +5,9 @@ import OpenQuestionLongEditable from './OpenQuestionLongEditable';
 import HeaderEncuesta from '../../StudentComponents/HeaderEncuesta';
 import NumericScaleEditable from './NumericScaleEditable';
 import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
+import Tostadas from '../../zSharedComponents/Tostadas';
+import { useNavigate } from 'react-router-dom';
 
 const SurveyBuilder = () => {
   const [title, setTitle] = useState('');
@@ -14,9 +17,12 @@ const SurveyBuilder = () => {
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
   const [subjects, setSubjects] = useState([]); //guarda lista de asignaturas
   const [selectedSubject, setSelectedSubject] = useState(''); //click -> selecciona asignatura
+  
 
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDescriptionChange = (e) => setDescription(e.target.value);
+
+  const navigate = useNavigate();
 
   const handleGenerateQuestions = () => {
     const newQuestions = Array.from({ length: numQuestions }, (_, i) => ({
@@ -89,6 +95,7 @@ const SurveyBuilder = () => {
 
   const handleSubmit = async () => {
     // Agrupar preguntas según el tipo seleccionado
+    setIsSubmitDisabled(true);
     const groupedQuestions = {
       Agreedlevel: [],
       Agreedlevel2: [],
@@ -133,8 +140,16 @@ const SurveyBuilder = () => {
         }
       });
       console.log('Respuesta del backend:', response.data);
+      if (response.status === 200 || response.status === 201){
+        console.log("creado con exito");
+        Tostadas.ToastSuccess(`Encuesta ${surveyJSON.title} ha sido creada exitosamente`);
+        setTimeout(() => {
+          navigate(-1);
+        }, 2000);
+      }
     } catch (error) {
       console.error('Error al enviar la encuesta:', error);
+      Tostadas.ToastError(`Error mientras se creaba la encuesta ${surveyJSON.title}`);
     }
 
   };
@@ -314,6 +329,7 @@ const SurveyBuilder = () => {
 
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
