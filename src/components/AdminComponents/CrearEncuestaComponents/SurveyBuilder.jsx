@@ -142,14 +142,14 @@ const SurveyBuilder = () => {
       console.log('Respuesta del backend:', response.data);
       if (response.status === 200 || response.status === 201){
         console.log("creado con exito");
-        Tostadas.ToastSuccess(`Encuesta ${surveyJSON.title} ha sido creada exitosamente`);
+        Tostadas.ToastSuccess(`${surveyJSON.title} ha sido creada exitosamente`);
         setTimeout(() => {
           navigate(-1);
         }, 2000);
       }
     } catch (error) {
       console.error('Error al enviar la encuesta:', error);
-      Tostadas.ToastError(`Error mientras se creaba la encuesta ${surveyJSON.title}`);
+      Tostadas.ToastError(`Error mientras se creaba ${surveyJSON.title}`);
     }
 
   };
