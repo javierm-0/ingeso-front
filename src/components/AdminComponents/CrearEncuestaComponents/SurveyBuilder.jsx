@@ -12,6 +12,8 @@ const SurveyBuilder = () => {
   const [numQuestions, setNumQuestions] = useState(1);
   const [questions, setQuestions] = useState([]);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+  const [subjects, setSubjects] = useState([]); //guarda lista de asignaturas
+  const [selectedSubject, setSelectedSubject] = useState(''); //click -> selecciona asignatura
 
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDescriptionChange = (e) => setDescription(e.target.value);
@@ -28,7 +30,7 @@ const SurveyBuilder = () => {
 
   const checkSubmitStatus = () => {
     const allQuestionsValid = questions.every(q => q.text.trim() !== ''); // Verificar si todas las preguntas tienen texto
-    setIsSubmitDisabled(questions.length === 0 || !allQuestionsValid || !title.trim() || !description.trim()
+    setIsSubmitDisabled(questions.length === 0 || !allQuestionsValid || !title.trim() || !description.trim() || !selectedSubject.trim()
     ); // Deshabilitar si alguna no tiene texto
   };
   
@@ -39,7 +41,7 @@ const SurveyBuilder = () => {
 
     useEffect(() => {
         checkSubmitStatus();
-    }, [questions, title, description]);
+    }, [questions, title, description,selectedSubject]);
     //si se modifica questions, titulo o descrip, se ejecuta y verifica que todo este bien para el envio
 
   const handleAddOption = (id) => {
@@ -47,6 +49,19 @@ const SurveyBuilder = () => {
       q.id === id ? { ...q, options: [...q.options, ''] } : q
     ));
   };
+
+  useEffect(() => {
+    const fetchSubjects = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/subjects/');
+        setSubjects(response.data); // Store subjects in state
+      } catch (error) {
+        console.error('Error fetching subjects:', error);
+      }
+    };
+
+    fetchSubjects();
+  }, []);
 
   const handleOptionChange = (id, index, value) => {
     setQuestions(questions.map(q => 
@@ -92,13 +107,12 @@ const SurveyBuilder = () => {
     const surveyJSON = {
       title: title.trim(),
       description: description.trim(),
+      subject: selectedSubject,
       dimensions: [
         {
           name: "Identificación y Caracterización",
           tipo: "Identidad",
           items: [
-            { text: "Nombre Asignatura" },
-            { text: "Profesor(a) de la Asignatura" },
             { text: "Nombre del alumno (opcional)" }
           ]
         },
@@ -125,6 +139,10 @@ const SurveyBuilder = () => {
 
   };
   
+  const handleSelectSubject = (subject) => {
+    console.log("Asignatura elegida: ",subject)
+    setSelectedSubject(subject); // Set the selected subject
+  };
   
 
   return (
@@ -155,6 +173,24 @@ const SurveyBuilder = () => {
             className="w-full p-2 border border-gray-300 rounded mb-4"
             rows={3}
         />
+
+
+        {/* Display Subject List */}
+        {subjects.map((currentSubjectObj, index) => {
+        const asignatura = currentSubjectObj.asignatura;  // Get the subject name
+        return (
+          <button
+            key={index}
+            onClick={() => handleSelectSubject(asignatura)}  // Pass only the subject name to the handler
+            className={`w-full p-2 text-left border rounded transition-colors duration-200 
+              ${selectedSubject === asignatura ? 'bg-blue-500 text-white' : 'bg-gray-100 hover:bg-blue-200'}`}
+          >
+            {asignatura}  {/* Display the subject name */}
+          </button>
+        );
+      })}
+
+
 
         {/* Formulario de preguntas */}
         <div className="p-4 w-full max-w-screen-xl mx-auto">
