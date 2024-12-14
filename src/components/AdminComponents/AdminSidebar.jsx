@@ -7,6 +7,8 @@ import iconUser from '../../assets/profile-circle.svg';
 import iconProgram from '../../assets/submit-document.svg';
 import iconCheck from '../../assets/doc-glass-in.svg';
 import iconAdd from '../../assets/page-plus.svg'
+import iconAddSurvey from '../../assets/plus-square.svg'
+import iconAddUser from '../../assets/plus-circle.svg'
 import { BsArrowLeftSquareFill } from "react-icons/bs";
 import { RiDashboardFill } from "react-icons/ri";
 
@@ -22,6 +24,8 @@ const AdminSidebar = () =>{
         {title: "Inicio", icon: <img src={iconHome}/>, link: "/admin"},
         {title: "Perfil", icon: <img src={iconUser}/>, link: "/admin/adminProfile"},
         {title: "Crear encuesta", icon: <img src={iconAdd}/>, link: "/admin/crearEncuesta"},
+        {title: "Agregar asignaturas", icon: <img src={iconAddSurvey}/>, link: ""},
+        {title: "Agregar usuarios", icon: <img src={iconAddUser}/>, link: ""},
         {title: "Subir fechas de envio de encuestas existentes", icon: <img src={iconProgram} />, link: ""},
         {title: "Ver Respuestas", icon:<img src={iconCheck} />, link: ""},
         {title: "Asignar Asignaturas en Estudiantes", icon:<img src={iconAdd} />, link: "/admin/elegirEstudiante"},
@@ -49,7 +53,7 @@ const AdminSidebar = () =>{
                 <img src={ucnLogo} className={`text-4xl
                 rounded cursor-pointer block float-left mr-2 mb-8
                 `}/>
-                <p className='text-white font-bold'>ADMIN</p>
+                <p className='text-white font-bold'>Menu Admin</p>
            <ul className="pt-2">
             {Menus.map((menu, index) => (
                 <React.Fragment key={index}>

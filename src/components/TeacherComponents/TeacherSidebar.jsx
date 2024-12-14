@@ -43,7 +43,7 @@ const TeacherSidebar = () =>{
                 <img src={ucnLogo} className={`text-4xl
                 rounded cursor-pointer block float-left mr-2 mb-8
                 `}/>
-                <p className='text-white font-semibold'>Nombre Docente</p>
+                <p className='text-white font-semibold'>Menu Docente</p>
            <ul className="pt-2">
             {Menus.map((menu, index) => (
                 <React.Fragment key={index}>
