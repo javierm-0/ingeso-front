@@ -27,7 +27,7 @@ const AdminSidebar = () =>{
         {title: "Agregar asignaturas", icon: <img src={iconAddSurvey}/>, link: ""},
         {title: "Agregar usuarios", icon: <img src={iconAddUser}/>, link: ""},
         {title: "Subir fechas de envio de encuestas existentes", icon: <img src={iconProgram} />, link: ""},
-        {title: "Ver Respuestas", icon:<img src={iconCheck} />, link: ""},
+        {title: "Ver Respuestas", icon:<img src={iconCheck} />, link: "/admin/verRespuestas"},
         {title: "Asignar Asignaturas en Estudiantes", icon:<img src={iconAdd} />, link: "/admin/elegirEstudiante"},
         {title: "Asignar Asignaturas en Profesores", icon:<img src={iconAdd} />, link: "/admin/elegirProfesor"},
         {title: "Ver dashboard", icon:<RiDashboardFill />, link: ""},

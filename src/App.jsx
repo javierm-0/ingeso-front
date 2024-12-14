@@ -23,6 +23,8 @@ import AsignarAsignaturaEstudiante from './components/AdminComponents/AsignarAsi
 import EliminarAsignaturaEstudiante from './components/AdminComponents/AsignarAsignaturaEnEstudiante/EliminarAsignaturaEstudiante.jsx';
 import ListadoAsignaturaProfe from './components/TeacherComponents/VerRespuestas/ListadoAsignaturaProfe.jsx';
 import RespuestasAsignatura from './components/TeacherComponents/VerRespuestas/RespuestasAsignatura.jsx';
+import ListadoAsignaturaAdmin from './components/AdminComponents/VerRespuestasAdmin/ListadoAsignaturaAdmin.jsx';
+import RespuestasAsignaturaAdmin from './components/AdminComponents/VerRespuestasAdmin/RespuestasAsignaturaAdmin.jsx';
 
 
 const App = () => {
@@ -76,6 +78,10 @@ const App = () => {
             <ProtectedRoute allowedRoles={['admin']}><EliminarAsignaturaProf /></ProtectedRoute>} />
 
 
+          <Route path="/admin/verRespuestas" element={
+            <ProtectedRoute allowedRoles={['admin']}><ListadoAsignaturaAdmin /></ProtectedRoute>} />
+            <Route path="/admin/verRespuestas/asignatura" element={
+          <ProtectedRoute allowedRoles={['admin']}><RespuestasAsignaturaAdmin /></ProtectedRoute>} />
 
           <Route path="*" element={<Login></Login>} />
         </Routes>
