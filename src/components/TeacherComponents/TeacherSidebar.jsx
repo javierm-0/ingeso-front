@@ -20,7 +20,7 @@ const TeacherSidebar = () =>{
     const Menus = [
         {title: "Inicio", icon: <img src={iconHome}/>, link: "/teacher"},
         {title: "Perfil", icon: <img src={iconUser}/>, link: "/teacher/teacherProfile"},
-        {title: "Ver Respuestas", icon:<img src={iconCheck} />, link: ""},
+        {title: "Ver Respuestas", icon:<img src={iconCheck} />, link: "/teacher/verRespuestas"},
         {title: "Cerrar Sesión", spacing: true, icon: <img src={iconClose} />, link: "/", isExitButton: true},
     ];
 

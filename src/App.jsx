@@ -21,6 +21,8 @@ import AsignarAsignaturaProf from './components/AdminComponents/AsignarAsignatur
 import EliminarAsignaturaProf from './components/AdminComponents/AsignarAsignaturaEnProfesor/EliminarAsignaturaProf.jsx';
 import AsignarAsignaturaEstudiante from './components/AdminComponents/AsignarAsignaturaEnEstudiante/AsignarAsignaturaEstudiante.jsx';
 import EliminarAsignaturaEstudiante from './components/AdminComponents/AsignarAsignaturaEnEstudiante/EliminarAsignaturaEstudiante.jsx';
+import RespuestaPorProfesor from './components/TeacherComponents/VerRespuestas/RespuestaProfesor.jsx';
+
 
 const App = () => {
 
@@ -34,6 +36,8 @@ const App = () => {
             <ProtectedRoute allowedRoles={['teacher']}><Teacher /></ProtectedRoute>} />
           <Route path="/teacher/teacherProfile" element={
             <ProtectedRoute allowedRoles={['teacher']}><TeacherPerfil /></ProtectedRoute>} />
+          <Route path="/teacher/verRespuestas" element={
+            <ProtectedRoute allowedRoles={['teacher']}><RespuestaPorProfesor /></ProtectedRoute>} />
 
           
           <Route path="/student" element={
