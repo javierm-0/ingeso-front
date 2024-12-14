@@ -15,6 +15,15 @@ const DimensionCinco = ({dataRelevante, onResponseUpdate}) => {
     onResponseUpdate(id, responseValue); //llama a la func de actualizar con la nueva data
   };
 
+  
+  if (!dataRelevante?.items?.length) {
+    return (
+      <div>
+        
+      </div>
+    );
+  }
+
   return (
     <div className="p-4">
       <h2 className="text-xl font-bold">Evaluación de la Asignatura</h2>

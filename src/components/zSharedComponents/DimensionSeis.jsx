@@ -12,6 +12,15 @@ const DimensionSeis = ({ dataRelevante, onResponseUpdate }) => {
         onResponseUpdate(id, value); // Envía la respuesta al componente padre
     };
 
+      
+    if (!dataRelevante?.items?.length) {
+      return (
+        <div>
+          
+        </div>
+      );
+    }
+
     return (
         <div className="p-4">
           <h2 className="text-xl font-bold">Respuestas Abiertas</h2>

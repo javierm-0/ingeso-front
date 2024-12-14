@@ -23,6 +23,14 @@ const DimensionUno = ({ dataRelevante, onResponseUpdate }) => {
     onResponseUpdate(itemId, optionIndex); // Actualiza al componente padre
   };
 
+  if (!dataRelevante?.items?.length) {
+    return (
+      <div>
+        
+      </div>
+    );
+  }
+
 
   return (
     <div className="p-4">

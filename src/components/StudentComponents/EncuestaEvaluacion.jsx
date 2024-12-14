@@ -154,7 +154,6 @@ const handleSubmit = async () => {
             <div>
               {cuestionario.dimensions.map((dimension) => {
                 const { tipo } = dimension;
-
                 if (tipo === "Identidad") {
                   return <DimensionCero key={dimension.id} dataRelevante={dimension} onResponseUpdate={handleResponseUpdate}/>;
                 }
