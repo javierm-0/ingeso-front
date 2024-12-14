@@ -5,123 +5,109 @@ import StudentSidebar from './StudentSidebar';
 import { useNavigate } from 'react-router-dom';
 import { RingLoader } from 'react-spinners';
 
-
-//ESTE COMPONENTE ES SOLO PARA ESTUDIANTES(no mover de la carpeta StudentComponents xd)
-/**
- * @typedef {Object} Item
- * @property {number} id - El ID del item.
- * @property {string} text - El texto del item.
- */
-
-/**
- * @typedef {Object} Dimension
- * @property {number} id - El ID de la dimensión.
- * @property {string} name - El nombre de la dimensión.
- * @property {string} tipo - El tipo de la dimensión.
- * @property {Item[]} items - Un arreglo de items en esta dimensión.
- */
-
-/**
- * @typedef {Object} Cuestionario
- * @property {number} id - El ID del cuestionario.
- * @property {string} title - El título del cuestionario.
- * @property {string} description - La descripción del cuestionario.
- * @property {Dimension[]} dimensions - Un arreglo de dimensiones en el cuestionario.
- */
-
 const ListadoEncuestas = () => {
-    const [jsonCuestionarios, setJsonCuestionarios] = useState([]);//json legendario que contiene todos los cuestionarios
-    const [jsonCuestionarioSeleccionado, setJsonCuestionarioSeleccionado] = useState(null);
-    const navigate = useNavigate();
-    
-    useEffect(() => {
-        const fetchCuestionarios = async () => {
-            try {
-                const response = await axios.get('http://localhost:4000/surveys');
-                setJsonCuestionarios(response.data);
-            } catch (error) {
-                console.error('Error al obtener los cuestionarios:', error);
-            }
-        };
-        
-        fetchCuestionarios();
-    }, []);
-        
-    const manejarSeleccion = (id) => {
-        // Encontrar el cuestionario seleccionado por ID
-        const encuestaElegida = jsonCuestionarios.find(c => c.id === id);
-        setJsonCuestionarioSeleccionado(encuestaElegida);
-        navigate(`/student/elegirEncuesta/responderEncuesta`, { state: { cuestionario: encuestaElegida } });
+  const [jsonCuestionarios, setJsonCuestionarios] = useState([]);
+  const [jsonCuestionarioSeleccionado, setJsonCuestionarioSeleccionado] = useState(null);
+  const [subjects, setSubjects] = useState(['Biología Marina', 'Física', 'Matemáticas']); // Example subjects, you can fetch this dynamically if needed.
+  const navigate = useNavigate();
+  
+  // Function to fetch surveys by subject
+  const fetchSurveysBySubject = async (subject) => {
+    try {
+      const response = await axios.get(`http://localhost:4000/surveys/subject/${encodeURIComponent(subject)}`);
+      return response.data.data; // Assuming the survey data is in 'data'
+    } catch (error) {
+      console.error(`Error al obtener los cuestionarios para la asignatura ${subject}:`, error);
+      return [];
+    }
+  };
+
+  useEffect(() => {
+    // Function to gather all surveys across different subjects
+    const fetchAllSurveys = async () => {
+      let allSurveys = [];
+      for (const subject of subjects) {
+        const surveysForSubject = await fetchSurveysBySubject(subject);
+        allSurveys = [...allSurveys, ...surveysForSubject]; // Combine surveys from each subject
+      }
+      setJsonCuestionarios(allSurveys); // Update state with all surveys
     };
 
-    const columns = [
-        {
-            name: 'Título',
-            selector: row => row.title,
-            sortable: true,
-            width: '750px',
-            cell: row => (
-                <div className="font-bold">
-                    {row.title}
-                </div>
-            ),
-        },
-        {
-            name: 'Acción',
-            button: true,
-            width: '150px',
-            cell: row => (
-                <button
-                    className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
-                    onClick={() => manejarSeleccion(row.id)}
-                >
-                    Responder
-                </button>
-            ),
-        },
-    ];
+    fetchAllSurveys();
+  }, [subjects]);
 
-    const customStyles = {
-        headCells: {
-            style: {
-                backgroundColor: '#164a5f',
+  const manejarSeleccion = (id) => {
+    const encuestaElegida = jsonCuestionarios.find(c => c.id === id);
+    setJsonCuestionarioSeleccionado(encuestaElegida);
+    navigate(`/student/elegirEncuesta/responderEncuesta`, { state: { cuestionario: encuestaElegida } });
+  };
+
+  const columns = [
+    {
+      name: 'Título',
+      selector: row => row.title,
+      sortable: true,
+      width: '750px',
+      cell: row => (
+        <div className="font-bold text-lg text-[#164a5f]">
+          {row.title}
+        </div>
+      ),
+    },
+    {
+      name: 'Acción',
+      button: true,
+      width: '150px',
+      cell: row => (
+        <button
+          className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+          onClick={() => manejarSeleccion(row.id)}
+        >
+          Responder
+        </button>
+      ),
+    },
+  ];
+
+  return (
+    <div className="flex">
+      <div className="w-[340px]">
+        <StudentSidebar />
+      </div>
+
+      <div className="ml-[340px] mt-8 mr-8 w-full max-w-3xl rounded-lg">
+        <DataTable
+          title={<span className="text-3xl text-[#164a5f] font-bold">Listado de Cuestionarios</span>}
+          columns={columns}
+          data={jsonCuestionarios}
+          progressPending={!jsonCuestionarios.length}
+          pagination
+          highlightOnHover
+          pointerOnHover
+          noDataComponent="No se encontraron cuestionarios"
+          progressComponent={
+            <div className="flex flex-col items-center justify-center mt-24">
+              <RingLoader color="#164a5f" size={50} />
+              <div className="mt-2 font-bold">Cargando, por favor espere...</div>
+            </div>
+          }
+          // Tailwind applied to the table itself
+          className="table-fixed"
+          // Tailwind applied to the table header and cells
+          customStyles={{
+            headCells: {
+              style: {
+                // These inline styles are now handled with Tailwind directly
+                backgroundColor: '#164a5f', // We keep this as it’s a specific color
                 color: 'white',
                 fontWeight: 'bold',
+              },
             },
-        },
-        table: {
-            width: '100%',
-            tableLayout: 'fixed',
-        },
-    };
-    
-    return (
-        <div className="flex">
-            <div>
-                <StudentSidebar />
-            </div>
-
-            <div className="ml-[340px] mt-[30px] mr-36 w-full max-w-[900px] rounded-[10px]">
-                <DataTable
-                    title={<span className="text-3xl text-[#164a5f] font-bold">Listado de Cuestionarios</span>}
-                    columns={columns}
-                    data={jsonCuestionarios}
-                    progressPending={!jsonCuestionarios.length}
-                    pagination
-                    highlightOnHover
-                    pointerOnHover
-                    noDataComponent="No se encontraron cuestionarios"
-                    customStyles={customStyles}
-                    progressComponent={
-                        <div className="flex flex-col items-center justify-center mt-[180px]">
-                        <RingLoader color="#164a5f" size={50} /> 
-                        <div className="mt-2 font-bold">Cargando, por favor espere...</div>
-                    </div>
-                    }
-                />
-            </div>
-        </div>
-    );
+          }}
+        />
+      </div>
+    </div>
+  );
 };
 
 export default ListadoEncuestas;

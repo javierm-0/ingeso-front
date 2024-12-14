@@ -53,12 +53,18 @@ const options = [//esto es constante, se guardara en codigo
     "Sin información"
   ];
 
-const EncuestaEvaluacion = () => {
-  const [responses, setResponses] = useState({
-    userId: null, 
-    responses: [] //inicializamos con un arreglo vacío
-});
+  const EncuestaEvaluacion = () => {
+    const location = useLocation();
+    const { cuestionario } = location.state || {};
 
+
+    const [responses, setResponses] = useState({
+      userId: null, 
+      responses: [], //inicializamos con un arreglo vacío,
+      subject: cuestionario.subject,
+      surveyId: cuestionario.id,
+    });
+    
   useEffect(() => {
     const userId = getUserIdFromToken();//inicializar el userId a partir del token
     if (userId) {
@@ -69,9 +75,7 @@ const EncuestaEvaluacion = () => {
     }
   }, []);
   
-  const location = useLocation();
-  const { cuestionario } = location.state || {};
-
+  console.log("cuestionario: ",JSON.stringify(cuestionario,null,2));
   const navigate = useNavigate(); // Hook de react-router-dom para redirigir
 
 
