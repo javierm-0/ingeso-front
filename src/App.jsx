@@ -21,7 +21,8 @@ import AsignarAsignaturaProf from './components/AdminComponents/AsignarAsignatur
 import EliminarAsignaturaProf from './components/AdminComponents/AsignarAsignaturaEnProfesor/EliminarAsignaturaProf.jsx';
 import AsignarAsignaturaEstudiante from './components/AdminComponents/AsignarAsignaturaEnEstudiante/AsignarAsignaturaEstudiante.jsx';
 import EliminarAsignaturaEstudiante from './components/AdminComponents/AsignarAsignaturaEnEstudiante/EliminarAsignaturaEstudiante.jsx';
-import RespuestaPorProfesor from './components/TeacherComponents/VerRespuestas/RespuestaProfesor.jsx';
+import ListadoAsignaturaProfe from './components/TeacherComponents/VerRespuestas/ListadoAsignaturaProfe.jsx';
+import RespuestasAsignatura from './components/TeacherComponents/VerRespuestas/RespuestasAsignatura.jsx';
 
 
 const App = () => {
@@ -37,7 +38,9 @@ const App = () => {
           <Route path="/teacher/teacherProfile" element={
             <ProtectedRoute allowedRoles={['teacher']}><TeacherPerfil /></ProtectedRoute>} />
           <Route path="/teacher/verRespuestas" element={
-            <ProtectedRoute allowedRoles={['teacher']}><RespuestaPorProfesor /></ProtectedRoute>} />
+            <ProtectedRoute allowedRoles={['teacher']}><ListadoAsignaturaProfe /></ProtectedRoute>} />
+          <Route path="/teacher/verRespuestas/asignatura" element={
+            <ProtectedRoute allowedRoles={['teacher']}><RespuestasAsignatura /></ProtectedRoute>} />
 
           
           <Route path="/student" element={
