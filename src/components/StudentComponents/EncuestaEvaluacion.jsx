@@ -125,10 +125,25 @@ const handleSubmit = async () => {
   try {
     const response = await axios.post('http://localhost:4000/responses/', responses);
     console.log("Responses submitted successfully:", response.data);
+     // Ahora hacemos el POST para marcar la encuesta como completada
+     const completeAssignmentPayload = {
+      userId: responses.userId,
+      surveyId: responses.surveyId
+    };
+
+    // Llamada para completar la asignación
+    await axios.post('http://localhost:4000/survey-assignments/complete', completeAssignmentPayload)
+      .then(completeResponse => {
+        console.log("Survey assignment marked as complete:", completeResponse.data);
+      })
+      .catch(error => {
+        console.error("Error completing survey assignment:", error);
+        Tostadas.ToastError("Error al completar la asignación de encuesta.");
+      });
     Tostadas.ToastSuccess("Respuestas enviadas con éxito");
+
     setTimeout(() => {
       navigate(`/student/elegirEncuesta/`) //retrocede
-      console.log("retrocede");
     }, 2000); //2 segundos
 
   } catch (error) {

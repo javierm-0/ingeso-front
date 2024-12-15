@@ -25,7 +25,7 @@ const AdminSidebar = () =>{
         {title: "Perfil", icon: <img src={iconUser}/>, link: "/admin/adminProfile"},
         {title: "Ver dashboard", icon:<RiDashboardFill />, link: ""},
         {title: "Ver Respuestas", icon:<img src={iconCheck} />, link: "/admin/verRespuestas"},
-        {title: "Subir fechas de envio de encuestas existentes", icon: <img src={iconProgram} />, link: ""},
+        {title: "Subir fechas de envio de encuestas existentes", icon: <img src={iconProgram} />, link: "/admin/tiempoLimite"},
         {title: "Crear encuesta", icon: <img src={iconAdd}/>, link: "/admin/crearEncuesta"},
         {title: "Asignar Asignaturas en Estudiantes", icon:<img src={iconAdd} />, link: "/admin/elegirEstudiante"},
         {title: "Asignar Asignaturas en Profesores", icon:<img src={iconAdd} />, link: "/admin/elegirProfesor"},
