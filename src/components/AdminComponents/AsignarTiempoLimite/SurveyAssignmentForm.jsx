@@ -17,7 +17,6 @@ const SurveyAssignmentForm = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Cargar asignaturas
     axios.get('http://localhost:3000/subjects/')
       .then(response => setSubjects(response.data))
       .catch(error => {
@@ -30,25 +29,24 @@ const SurveyAssignmentForm = () => {
   const handleSubjectSelect = (subject) => {
     setSelectedSubject(subject);
     axios.get(`http://localhost:3000/user/students/subject/${encodeURIComponent(subject.asignatura)}`)
-      .then(response => setStudents(response.data)) // Establece los estudiantes para la asignatura
+      .then(response => setStudents(response.data))
       .catch(error => console.error('Error fetching students', error));
     
-    // Cargar encuestas para la asignatura seleccionada
     axios.get(`http://localhost:4000/surveys/subject/${encodeURIComponent(subject.asignatura)}`)
       .then(response => {
         const surveysToDisplay = [];
         
-        // Verificar cada encuesta para ver si tiene deadline
+        //verificar cada encuesta para ver si tiene deadline
         const surveyPromises = response.data.data.map(survey =>
           axios.get(`http://localhost:4000/survey-assignments/has-deadline/${survey.id}`).then(deadlineResponse => {
-            // Si no tiene deadline, agregar a la lista
+            //si no tiene deadline, agregar a la lista
             if (!deadlineResponse.data) {
               surveysToDisplay.push(survey);
             }
           })
         );
 
-        // Una vez que todas las encuestas han sido verificadas
+        //enviar en paralelo
         Promise.all(surveyPromises).then(() => {
           setSurveys(surveysToDisplay);
         });
@@ -60,7 +58,7 @@ const SurveyAssignmentForm = () => {
   };
 
   const handleAssignSurvey = (survey) => {
-    // Asignar encuesta a los estudiantes
+    // asignar encuesta a los estudiantes de una asignatura
     if (!endDate) {
       alert('Por favor complete la fecha límite.');
       return;
@@ -75,7 +73,6 @@ const SurveyAssignmentForm = () => {
         signature: selectedSubject.asignatura,
       };
 
-      // Enviar el POST al endpoint para crear la asignación
       axios.post('http://localhost:4000/survey-assignments/', assignmentData)
         .then(response => {
           if (response.status === 200 || response.status === 201) {
@@ -88,10 +85,10 @@ const SurveyAssignmentForm = () => {
         });
     });
 
-    // Limpiar formulario
+    //limpiar datos
     setSelectedSurvey(null);
     setEndDate('');
-    // Actualizar la lista de encuestas disponibles
+    //actualizar listado de encuestas
     setSurveys(surveys.filter(s => s.id !== survey.id));
   };
 
