@@ -42,11 +42,11 @@ const ListadoAsignaturaAdmin = () => {
 
   return (
     <div className="flex">
-      <div className="fixed top-0 left-0 w-72 h-screen">
+      <div className="w-1/5">
         <AdminSidebar />
       </div>
 
-      <div className="ml-80 mt-12">
+      <div className="ml-40 mt-12 mr-36 w-[50%] bg-white p-8 rounded-lg shadow-lg">
         <h1 className="text-2xl font-bold mb-4">Listado de Asignaturas</h1>
         {subjects.length === 0 ? (
           <p className="text-gray-500">No hay asignaturas disponibles.</p>

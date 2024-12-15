@@ -113,7 +113,7 @@ const SurveyAssignmentForm = () => {
   return (
     <div className="flex">
       <div className="w-1/5">
-                <AdminSidebar />
+        <AdminSidebar />
       </div>
       <div className="ml-40 mt-12 mr-36 w-[50%] bg-white p-8 rounded-lg shadow-lg">
         <div className="max-w-3xl mx-auto p-4 bg-white shadow-lg rounded-lg">
