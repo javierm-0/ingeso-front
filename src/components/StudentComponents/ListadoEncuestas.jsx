@@ -35,13 +35,18 @@ const ListadoEncuestas = () => {
                     const response = await axios.get(`http://localhost:4000/surveys/subject/${subject.asignatura}`);
 
                     if (response.data && response.data.success) {
-                        encuestasAsignadas.push(...response.data.data);
+                        for (const encuesta of response.data.data) {
+                            // Llamar al endpoint que verifica si tiene un deadline asignado
+                            const hasDeadlineResponse = await axios.get(`http://localhost:4000/survey-assignments/has-deadline/${encuesta.id}`);
+                            
+                            if (hasDeadlineResponse.data && hasDeadlineResponse.data === true && !respondedSurveys.has(encuesta.id)) {
+                                encuestasAsignadas.push(encuesta);
+                            }
+                        }
                     }
                 }
 
-                // Filtrar encuestas pendientes
-                const pendientes = encuestasAsignadas.filter(encuesta => !respondedSurveys.has(encuesta.id));
-                setEncuestasPendientes(pendientes);
+                setEncuestasPendientes(encuestasAsignadas);
                 setEncuestasCargadas(true);
 
             } catch (error) {
