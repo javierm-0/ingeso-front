@@ -112,79 +112,83 @@ const SurveyAssignmentForm = () => {
 
   return (
     <div className="flex">
-      <AdminSidebar />
-      <div className="max-w-3xl mx-auto p-4 bg-white shadow-lg rounded-lg">
-        <h1 className="text-2xl font-bold text-center mb-4">Asignar Encuesta</h1>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="subject" className="block text-lg font-medium text-gray-600">Asignatura:</label>
-            <select
-              id="subject"
-              onChange={(e) => handleSubjectSelect(subjects.find(sub => sub.id === parseInt(e.target.value)))}
-              required
-              className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg"
-            >
-              <option value="">Seleccionar Asignatura</option>
-              {subjects.map((subject) => (
-                <option key={subject.id} value={subject.id}>{subject.asignatura}</option>
-              ))}
-            </select>
-          </div>
-
-          {selectedSubject && (
+      <div className="w-1/5">
+                <AdminSidebar />
+      </div>
+      <div className="ml-40 mt-12 mr-36 w-[50%] bg-white p-8 rounded-lg shadow-lg">
+        <div className="max-w-3xl mx-auto p-4 bg-white shadow-lg rounded-lg">
+          <h1 className="text-2xl font-bold text-center mb-4">Fecha Límite de Encuesta</h1>
+          <form onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="survey" className="block text-lg font-medium text-gray-600">Encuesta:</label>
-              <div className="grid grid-cols-1 gap-4 mt-2">
-                {surveys.length > 0 ? (
-                  surveys.map((survey) => (
-                    <div
-                      key={survey.id}
-                      className={`p-4 rounded-md shadow-sm cursor-pointer ${
-                        selectedSurvey && selectedSurvey.id === survey.id
-                          ? 'bg-[#164a5f] text-white'
-                          : 'bg-gray-100 hover:bg-gray-200'
-                      }`}
-                      onClick={() => setSelectedSurvey(survey)}
-                    >
-                      <p className="text-lg font-medium">{survey.title}</p>
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-center text-gray-500">
-                    No hay encuestas disponibles para asignar.
-                  </p>
-                )}
-              </div>
-            </div>
-          )}
-
-          {selectedSurvey && (
-            <div>
-              <label htmlFor="endDate" className="block text-lg font-medium text-gray-600">Fecha Límite:</label>
-              <input
-                type="date"
-                id="endDate"
-                value={endDate.split("T")[0]}
-                onChange={(e) => {
-                  const selectedDate = e.target.value;
-                  const dateWithTime = `${selectedDate}T03:03:00`;
-                  setEndDate(dateWithTime);
-                }}
+              <label htmlFor="subject" className="block text-lg font-medium text-gray-600">Asignatura:</label>
+              <select
+                id="subject"
+                onChange={(e) => handleSubjectSelect(subjects.find(sub => sub.id === parseInt(e.target.value)))}
                 required
                 className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg"
-              />
+              >
+                <option value="">Seleccionar Asignatura</option>
+                {subjects.map((subject) => (
+                  <option key={subject.id} value={subject.id}>{subject.asignatura}</option>
+                ))}
+              </select>
             </div>
-          )}
 
-          <div>
-            <button
-              type="submit"
-              className="w-full py-2 px-4 bg-[#164a5f] text-white font-semibold rounded-lg shadow-lg hover:bg-[#1f5c71]"
-            >
-              Crear Asignación
-            </button>
-          </div>
-        </form>
+            {selectedSubject && (
+              <div>
+                <label htmlFor="survey" className="block text-lg font-medium text-gray-600">Encuesta:</label>
+                <div className="grid grid-cols-1 gap-4 mt-2">
+                  {surveys.length > 0 ? (
+                    surveys.map((survey) => (
+                      <div
+                        key={survey.id}
+                        className={`p-4 rounded-md shadow-sm cursor-pointer ${
+                          selectedSurvey && selectedSurvey.id === survey.id
+                            ? 'bg-[#164a5f] text-white'
+                            : 'bg-gray-100 hover:bg-gray-200'
+                        }`}
+                        onClick={() => setSelectedSurvey(survey)}
+                      >
+                        <p className="text-lg font-medium">{survey.title}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-center text-gray-500">
+                      No hay encuestas disponibles para asignar.
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {selectedSurvey && (
+              <div>
+                <label htmlFor="endDate" className="block text-lg font-medium text-gray-600">Fecha Límite:</label>
+                <input
+                  type="date"
+                  id="endDate"
+                  value={endDate.split("T")[0]}
+                  onChange={(e) => {
+                    const selectedDate = e.target.value;
+                    const dateWithTime = `${selectedDate}T03:03:00`;
+                    setEndDate(dateWithTime);
+                  }}
+                  required
+                  className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-lg"
+                />
+              </div>
+            )}
+
+            <div>
+              <button
+                type="submit"
+                className="w-full mt-3 py-2 px-4 bg-[#164a5f] text-white font-semibold rounded-lg shadow-lg hover:bg-[#1f5c71]"
+              >
+                Crear Asignación
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
       <ToastContainer />
     </div>
