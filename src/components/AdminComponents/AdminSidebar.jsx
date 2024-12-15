@@ -29,7 +29,7 @@ const AdminSidebar = () =>{
         {title: "Crear encuesta", icon: <img src={iconAdd}/>, link: "/admin/crearEncuesta"},
         {title: "Asignar Asignaturas en Estudiantes", icon:<img src={iconAdd} />, link: "/admin/elegirEstudiante"},
         {title: "Asignar Asignaturas en Profesores", icon:<img src={iconAdd} />, link: "/admin/elegirProfesor"},
-        {title: "Agregar asignaturas", icon: <img src={iconAddSurvey}/>, link: ""},
+        {title: "Agregar asignaturas", icon: <img src={iconAddSurvey}/>, link: "/admin/crearAsignaturas"},
         {title: "Agregar usuarios", icon: <img src={iconAddUser}/>, link: "/admin/crearUsuarios"},
         {title: "Cerrar Sesión", spacing: true, icon: <img src={iconClose} />, link: "/", isExitButton: true},
     ];

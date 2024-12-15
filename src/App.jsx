@@ -26,7 +26,8 @@ import RespuestasAsignatura from './components/TeacherComponents/VerRespuestas/R
 import ListadoAsignaturaAdmin from './components/AdminComponents/VerRespuestasAdmin/ListadoAsignaturaAdmin.jsx';
 import RespuestasAsignaturaAdmin from './components/AdminComponents/VerRespuestasAdmin/RespuestasAsignaturaAdmin.jsx';
 
-import CrearUsuarios from './components/AdminComponents/AdminAddUsers.jsx';
+import CrearUsuarios from './components/AdminComponents/CrearUsuario/AdminAddUsers.jsx';
+import CrearAsignaturas from './components/AdminComponents/AdminAddSubject.jsx'
 import SurveyAssignmentForm from './components/AdminComponents/AsignarTiempoLimite/SurveyAssignmentForm.jsx';
 import AdminDashboard from './components/AdminComponents/Dashboard/AdminDashboard.jsx';
 
@@ -66,6 +67,8 @@ const App = () => {
             <ProtectedRoute allowedRoles={['admin']}><SurveyBuilder /></ProtectedRoute>} />
           <Route path="/admin/crearUsuarios" element={
             <ProtectedRoute allowedRoles={['admin']}><CrearUsuarios /></ProtectedRoute>} />
+          <Route path="/admin/crearAsignaturas" element={
+            <ProtectedRoute allowedRoles={['admin']}><CrearAsignaturas /></ProtectedRoute>} />
 
           <Route path="/admin/elegirEstudiante" element={
             <ProtectedRoute allowedRoles={['admin']}><StudentList/></ProtectedRoute>} />
