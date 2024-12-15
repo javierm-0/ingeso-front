@@ -146,8 +146,9 @@ const AdminDashboard = () => {
                                         completedSurveys.map((survey) => (
                                             <div key={survey.id} className="border-b py-2">
                                                 <h4 className="font-medium text-lg">{survey.survey.title}</h4>
+                                                <p className="text-gray-600">Asignatura: {survey.survey.subject}</p>
                                                 <p className="text-gray-600">Estudiante: {survey.userMail}</p>
-                                                <p className="text-sm text-gray-600">Fecha de finalización: {survey.endDate}</p>
+                                                <p className="text-sm text-gray-500">Fecha de finalización: {survey.endDate}</p>
                                             </div>
                                         ))
                                     ) : (
@@ -170,8 +171,9 @@ const AdminDashboard = () => {
                                         uncompletedSurveys.map((survey) => (
                                             <div key={survey.id} className="border-b py-2">
                                                 <h4 className="font-medium text-lg">{survey.survey.title}</h4>
+                                                <p className="text-gray-600">Asignatura: {survey.survey.subject}</p>
                                                 <p className="text-gray-600">Estudiante: {survey.userMail}</p>
-                                                <p className="text-sm text-gray-600">Fecha de finalización: {survey.endDate}</p>
+                                                <p className="text-sm text-gray-500">Fecha de finalización: {survey.endDate}</p>
                                             </div>
                                         ))
                                     ) : (
