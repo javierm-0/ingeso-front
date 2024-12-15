@@ -23,14 +23,14 @@ const AdminSidebar = () =>{
     const Menus = [
         {title: "Inicio", icon: <img src={iconHome}/>, link: "/admin"},
         {title: "Perfil", icon: <img src={iconUser}/>, link: "/admin/adminProfile"},
-        {title: "Crear encuesta", icon: <img src={iconAdd}/>, link: "/admin/crearEncuesta"},
-        {title: "Agregar asignaturas", icon: <img src={iconAddSurvey}/>, link: ""},
-        {title: "Agregar usuarios", icon: <img src={iconAddUser}/>, link: ""},
-        {title: "Subir fechas de envio de encuestas existentes", icon: <img src={iconProgram} />, link: ""},
+        {title: "Ver dashboard", icon:<RiDashboardFill />, link: ""},
         {title: "Ver Respuestas", icon:<img src={iconCheck} />, link: "/admin/verRespuestas"},
+        {title: "Subir fechas de envio de encuestas existentes", icon: <img src={iconProgram} />, link: ""},
+        {title: "Crear encuesta", icon: <img src={iconAdd}/>, link: "/admin/crearEncuesta"},
         {title: "Asignar Asignaturas en Estudiantes", icon:<img src={iconAdd} />, link: "/admin/elegirEstudiante"},
         {title: "Asignar Asignaturas en Profesores", icon:<img src={iconAdd} />, link: "/admin/elegirProfesor"},
-        {title: "Ver dashboard", icon:<RiDashboardFill />, link: ""},
+        {title: "Agregar asignaturas", icon: <img src={iconAddSurvey}/>, link: ""},
+        {title: "Agregar usuarios", icon: <img src={iconAddUser}/>, link: "/admin/crearUsuarios"},
         {title: "Cerrar Sesión", spacing: true, icon: <img src={iconClose} />, link: "/", isExitButton: true},
     ];
 

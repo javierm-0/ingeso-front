@@ -96,9 +96,30 @@ const RespuestasAsignaturaAdmin = () => {
   }
 
   if (!Object.keys(respuestasAgrupadas).length) {
-    return <p>No hay respuestas disponibles para esta asignatura.</p>;
-  }
+    return (
+      <div className='flex'>
+        <div className='fixed top-0 left-0 w-72 h-screen'>
+        <AdminSidebar />
+        </div>
+        <div className='ml-80 mt-12'>
+          <button
+            onClick={() => navigate(-1)} // Regresa a la página anterior
+            className="bg-[#164a5f] text-white px-4 py-2 rounded-lg shadow hover:bg-[#1f5c71] active:font-extrabold mb-4"
+          >
+          Regresar
+          </button>
 
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white shadow-lg rounded-lg p-4">
+              <h3 className="font-semibold">Sin Datos</h3>
+              <p className="text-lg">No hay respuestas disponibles para esta asignatura.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
   return (
     <div className="flex">
       <div className='fixed top-0 left-0 w-72 h-screen'>

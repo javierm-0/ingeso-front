@@ -26,6 +26,7 @@ import RespuestasAsignatura from './components/TeacherComponents/VerRespuestas/R
 import ListadoAsignaturaAdmin from './components/AdminComponents/VerRespuestasAdmin/ListadoAsignaturaAdmin.jsx';
 import RespuestasAsignaturaAdmin from './components/AdminComponents/VerRespuestasAdmin/RespuestasAsignaturaAdmin.jsx';
 
+import CrearUsuarios from './components/AdminComponents/AdminAddUsers.jsx';
 
 const App = () => {
 
@@ -61,7 +62,8 @@ const App = () => {
             <ProtectedRoute allowedRoles={['admin']}><AdminPerfil /></ProtectedRoute>} />
           <Route path="/admin/crearEncuesta" element={
             <ProtectedRoute allowedRoles={['admin']}><SurveyBuilder /></ProtectedRoute>} />
-
+          <Route path="/admin/crearUsuarios" element={
+            <ProtectedRoute allowedRoles={['admin']}><CrearUsuarios /></ProtectedRoute>} />
 
           <Route path="/admin/elegirEstudiante" element={
             <ProtectedRoute allowedRoles={['admin']}><StudentList/></ProtectedRoute>} />
