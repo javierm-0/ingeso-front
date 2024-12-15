@@ -28,6 +28,7 @@ import RespuestasAsignaturaAdmin from './components/AdminComponents/VerRespuesta
 
 import CrearUsuarios from './components/AdminComponents/AdminAddUsers.jsx';
 import SurveyAssignmentForm from './components/AdminComponents/AsignarTiempoLimite/SurveyAssignmentForm.jsx';
+import AdminDashboard from './components/AdminComponents/Dashboard/AdminDashboard.jsx';
 
 const App = () => {
 
@@ -86,7 +87,8 @@ const App = () => {
           <ProtectedRoute allowedRoles={['admin']}><RespuestasAsignaturaAdmin /></ProtectedRoute>} />
           <Route path="/admin/tiempoLimite" element={
             <ProtectedRoute allowedRoles={['admin']}><SurveyAssignmentForm /></ProtectedRoute>} />
-          SurveyAssignmentForm
+          <Route path="/admin/dashboard" element={
+            <ProtectedRoute allowedRoles={['admin']}><AdminDashboard /></ProtectedRoute>} />
 
           <Route path="*" element={<Login></Login>} />
         </Routes>

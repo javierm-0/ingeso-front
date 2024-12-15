@@ -56,7 +56,7 @@ const options = [//esto es constante, se guardara en codigo
   const EncuestaEvaluacion = () => {
     const location = useLocation();
     const { cuestionario } = location.state || {};
-
+    const [isBlocked, setIsBlocked] = useState(false);
 
     const [responses, setResponses] = useState({
       userId: null, 
@@ -64,6 +64,30 @@ const options = [//esto es constante, se guardara en codigo
       subject: cuestionario.subject,
       surveyId: cuestionario.id,
     });
+
+    const isAllRequiredFilled = () => {
+      return cuestionario.dimensions.every(dimension => {
+        return dimension.items.every(item => {
+          if (dimension.tipo === "Agreedlevel" || dimension.tipo === "Agreedlevel2" || dimension.tipo === "freetext") {
+            const response = responses.responses.find(response => response.itemId === item.id);
+            if (response) {
+              //si es string hace trim
+              const cleanedAnswer = typeof response.answer === 'string' 
+                ? response.answer.trim() 
+                : String(response.answer).trim();
+              
+              if (!cleanedAnswer) {
+                return false; // Si la respuesta está vacía o solo contiene espacios, no está llena
+              }
+            }
+            return true; // Si hay una respuesta válida, consideramos que está llena
+          }
+          return true; // Si no es un tipo obligatorio, lo consideramos como válido
+        });
+      });
+    };
+    
+    
     
   useEffect(() => {
     const userId = getUserIdFromToken();//inicializar el userId a partir del token
@@ -75,19 +99,15 @@ const options = [//esto es constante, se guardara en codigo
     }
   }, []);
   
-  console.log("cuestionario: ",JSON.stringify(cuestionario,null,2));
+  //console.log("cuestionario: ",JSON.stringify(cuestionario,null,2));
   const navigate = useNavigate(); // Hook de react-router-dom para redirigir
-
-
   const [dimensionCeroData, setDimensionCeroData] = useState([]);
   const [dimensionUnoData, setDimensionUnoData] = useState([]);
   const [dimensionSeisData, setDimensionSeisData] = useState([]);
 
   const handleResponseUpdate = (itemId, answer) => {
     setResponses(prevResponses => {
-        //verificamos si ya existe una respuesta para el itemId
         const existingResponse = prevResponses.responses.find(response => response.itemId === itemId);
-
         if (existingResponse) {
             return {
                 ...prevResponses,
@@ -105,52 +125,62 @@ const options = [//esto es constante, se guardara en codigo
 };
 
 const handleSubmit = async () => {
-  // Validar que todas las preguntas obligatorias tengan respuestas
-  const allRequiredFilled = cuestionario.dimensions.every(dimension => {
-    return dimension.items.every(item => {
-      if (dimension.tipo === "Agreedlevel" || dimension.tipo === "Agreedlevel2" || dimension.tipo === "freetext") {
-        return responses.responses.some(response => response.itemId === item.id && response.answer !== undefined && response.answer !== "");
-      }
-      return true;//si fuese de otro tipo no se verifica, puesto que es opcional
-    });
-  });
-
-  if (!allRequiredFilled) {
+  setIsBlocked(true);
+  console.log(responses);
+  if(responses.responses === null || responses.responses === undefined || responses.responses.length === 0){
+    Tostadas.ToastWarning("No hay absolutamente nada respondido aca");
+    setTimeout(() => {
+      setIsBlocked(false);
+    }, 5000);// por troll xd
+    return;
+  }
+  if (!isAllRequiredFilled()) {
+    setTimeout(() => {
+      setIsBlocked(false);
+    }, 1600);
     Tostadas.ToastWarning("Por favor, completa todas las preguntas obligatorias.");
     return;
   }
 
   //si pasa la validacion, enviar el payload
-  console.log('Payload que se enviará:', JSON.stringify(responses, null, 2));
+  //console.log('Payload que se enviará:', JSON.stringify(responses, null, 2));
   try {
+    Tostadas.ToastInfo("Enviando respuestas...");
     const response = await axios.post('http://localhost:4000/responses/', responses);
     console.log("Responses submitted successfully:", response.data);
-     // Ahora hacemos el POST para marcar la encuesta como completada
-     const completeAssignmentPayload = {
+
+    const completeAssignmentPayload = {
       userId: responses.userId,
-      surveyId: responses.surveyId
+      surveyId: responses.surveyId,
     };
 
     // Llamada para completar la asignación
-    await axios.post('http://localhost:4000/survey-assignments/complete', completeAssignmentPayload)
-      .then(completeResponse => {
-        console.log("Survey assignment marked as complete:", completeResponse.data);
-      })
-      .catch(error => {
-        console.error("Error completing survey assignment:", error);
-        Tostadas.ToastError("Error al completar la asignación de encuesta.");
-      });
-    Tostadas.ToastSuccess("Respuestas enviadas con éxito");
+    const completeResponse = await axios.post('http://localhost:4000/survey-assignments/complete', completeAssignmentPayload);
+    console.log("Survey assignment marked as complete:", completeResponse.data);
 
+    // Si todo sale bien
+    Tostadas.ToastSuccess("Respuestas enviadas con éxito");
     setTimeout(() => {
-      navigate(`/student/elegirEncuesta/`) //retrocede
-    }, 2000); //2 segundos
+      navigate(`/student/elegirEncuesta/`);
+    }, 1500);
 
   } catch (error) {
-    console.error("Error submitting responses:", error);
-    Tostadas.ToastError("Error durante el envio de cuestionario, intente más tarde");
+    console.error("Error:", error);
+    Tostadas.ToastError("Error durante el envío de la encuesta, intente más tarde.");
+    
+  } finally {
+    setResponses({
+      userId: null,
+      responses: [],
+      subject: cuestionario.subject,
+      surveyId: cuestionario.id,
+    });
+    setTimeout(() => {
+      setIsBlocked(false);
+    }, 1600);
   }
 };
+
 
 
 
@@ -185,7 +215,11 @@ const handleSubmit = async () => {
                 return null; // En caso de que el tipo no coincida
               })}
               <div className="flex justify-center mt-4">
-                <button onClick={handleSubmit} className="bg-[#164a5f] text-white px-4 py-6 text-2xl mb-2 rounded-md hover:font-extrabold active:scale-95 hover:scale-105 transition duration-200">
+                <button onClick={handleSubmit} 
+                  className={`bg-[#164a5f] text-white px-4 py-6 text-2xl mb-2 rounded-md
+                    ${(isBlocked) ? 'opacity-50 cursor-not-allowed' : 'active:font-extrabold active:scale-95 hover:scale-105 transition duration-200'}`}
+                disabled={isBlocked}
+                >
                     Enviar Respuestas!!
                 </button>
               </div>

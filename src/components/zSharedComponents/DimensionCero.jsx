@@ -29,7 +29,6 @@ const DimensionCero = ({dataRelevante , onResponseUpdate}) => {
     return (
         <div>
             <p className='mb-4'>
-                Dimensión 0: {dataRelevante.name}
             </p>
             <div className="grid grid-cols-2 mb-12">
                 {dataRelevante.items.map(item => (

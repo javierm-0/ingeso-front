@@ -110,7 +110,7 @@ const SurveyBuilder = () => {
       }
     });
   
-    // Construir el JSON
+    //construir json
     const surveyJSON = {
       title: title.trim(),
       description: description.trim(),
@@ -120,7 +120,9 @@ const SurveyBuilder = () => {
           name: "Identificación y Caracterización",
           tipo: "Identidad",
           items: [
-            { text: "Nombre del alumno (opcional)" }
+            { text: "Nombre del alumno: " },
+            { text: "Nombre del profesor: "},
+            { text: "Nombre de la asignatura: "},
           ]
         },
         ...Object.entries(groupedQuestions).map(([key, items], index) => ({

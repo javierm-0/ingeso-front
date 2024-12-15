@@ -23,7 +23,7 @@ const AdminSidebar = () =>{
     const Menus = [
         {title: "Inicio", icon: <img src={iconHome}/>, link: "/admin"},
         {title: "Perfil", icon: <img src={iconUser}/>, link: "/admin/adminProfile"},
-        {title: "Ver dashboard", icon:<RiDashboardFill />, link: ""},
+        {title: "Ver dashboard", icon:<RiDashboardFill />, link: "/admin/dashboard"},
         {title: "Ver Respuestas", icon:<img src={iconCheck} />, link: "/admin/verRespuestas"},
         {title: "Subir fechas de envio de encuestas existentes", icon: <img src={iconProgram} />, link: "/admin/tiempoLimite"},
         {title: "Crear encuesta", icon: <img src={iconAdd}/>, link: "/admin/crearEncuesta"},
