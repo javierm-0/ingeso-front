@@ -45,23 +45,20 @@ const AsignarAsignaturaProf = () => {
       );
 
       if (response.status === 200) {
-        console.log(`Asignatura ${subject.asignatura} asignada correctamente.`);
 
-        // Actualizar el estado local del profesor
         const updatedTeacher = {
           ...teacher,
           subjects: [...teacher.subjects, subject],
         };
 
-        // Actualizar almacenamiento local
+        
         localStorage.setItem('selectedTeacher', JSON.stringify(updatedTeacher));
 
-        // Refrescar la lista de asignaturas disponibles
+        
         setAvailableSubjects(prevSubjects =>
           prevSubjects.filter(subj => subj.asignatura !== subject.asignatura)
         );
 
-        // Marcar que se debe hacer un "refetch" de los profesores
         localStorage.setItem('refetchTeachers', 'true');
     
       }

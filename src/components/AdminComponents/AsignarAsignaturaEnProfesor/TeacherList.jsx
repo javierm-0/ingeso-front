@@ -23,7 +23,6 @@ const TeacherList = () => {
       }
     };
 
-    // Verificar si hay un "refetch" en localStorage
     const shouldRefetch = localStorage.getItem('refetchTeachers') === 'true';
 
     if (shouldRefetch) {

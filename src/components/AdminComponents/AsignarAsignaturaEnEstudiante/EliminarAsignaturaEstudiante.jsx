@@ -9,7 +9,7 @@ const EliminarAsignaturaEstudiante = () => {
   const [error, setError] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
-  const { student } = location.state || {}; // Recibimos el student serializado
+  const { student } = location.state || {};
 
   useEffect(() => {
     const fetchAssignedSubjects = async () => {
@@ -40,7 +40,6 @@ const EliminarAsignaturaEstudiante = () => {
       );
 
       if (response.status === 200) {
-        console.log(`Asignatura ${subject.asignatura} eliminada correctamente.`);
         // Actualizar la lista de asignaturas asignadas
         setAssignedSubjects(prevSubjects =>
           prevSubjects.filter(subj => subj.asignatura !== subject.asignatura)

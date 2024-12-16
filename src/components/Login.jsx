@@ -26,7 +26,6 @@ const Login = () => {
   const checkAccessToken = async () => {
     const AccessToken = localStorage.getItem('accessToken');
     if (AccessToken) {
-      console.log("hay access token: " + AccessToken);
       try {
         const decodedToken = jwtDecode(AccessToken);
         if (decodedToken.exp * 1000 > Date.now()) {
@@ -38,14 +37,12 @@ const Login = () => {
           });
           const user = response.data;
           localStorage.setItem('userData', JSON.stringify(user));
-          console.log("Token válido, redirigiendo...");
           // Si el rol está presente, redirigimos según el rol
           if (user.role === 'admin') {
             navigate('/admin');
           } else if (user.role === 'teacher') {
             navigate('/teacher');
           } else if (user.role === 'student') {
-            console.log("student log: ",userId);
             navigate('/student');
           } else {
             Tostadas.ToastWarning(`Rol de usuario no reconocido: ${user.role}`);
@@ -76,7 +73,6 @@ const Login = () => {
     }
 
     if(localStorage.getItem('userData') ||localStorage.getItem('accessToken')){
-      console.log("hay data residual...limpiando");
       localStorage.clear();//antes de logear, limpiar data residual de otra sesion
     }
 
@@ -95,7 +91,6 @@ const Login = () => {
         const userId = decodedToken.sub;//sub es el id del usuario
 
         //teniendo userId usamos el endpoint para obtener obj user
-        console.log("Access: "+AccessToken);
         try {
           const req = await axios.get(`http://localhost:3000/user/${userId}`, {
             headers: {
@@ -103,7 +98,6 @@ const Login = () => {
             }
           });
           const user = req.data;
-          console.log(user);
           localStorage.setItem('userData',JSON.stringify(user));
           Tostadas.ToastSuccess("Ha logrado ingresar, felicidades");
           const USERDATA = JSON.parse(localStorage.getItem('userData'));
@@ -145,18 +139,15 @@ const Login = () => {
       } else {
         //goodn't
         Tostadas.ToastWarning("Credenciales inválidas o error en el servidor.");
-        console.log("wut: "+response.status);
       }
       //errores
     } catch (error) {
       if (error.response) {
         // El servidor respondio con un codigo de estado fuera del rango 2xx
         Tostadas.ToastError("Credenciales inválidas: ");
-        console.log("que paso: "+error);
       } else if (error.request) {
         //No se recibio respuesta del servidor(timeout)
         Tostadas.ToastError("Hubo un error en la conexión con el servidor. ");
-        console.log("error: "+error.request);
       } else {
         //que pasa realmente
         Tostadas.ToastError("Ocurrió un error inesperado. \n"+error);

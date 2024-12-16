@@ -50,7 +50,6 @@ const StudentPerfil =() =>{
           });
     
           if (response.ok) {
-            console.log("Contraseña actualizada correctamente");
             Tostadas.ToastSuccess("Contraseña actualizada.");
             setResetting(false);
             setPassword('');

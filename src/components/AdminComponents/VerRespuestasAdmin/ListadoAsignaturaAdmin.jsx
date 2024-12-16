@@ -12,10 +12,8 @@ const ListadoAsignaturaAdmin = () => {
   useEffect(() => {
     // Fetch asignaturas desde el endpoint usando axios
     const fetchSubjects = async () => {
-      console.log('Iniciando la carga de asignaturas...');
       try {
         const response = await axios.get('http://localhost:3000/subjects/');
-        console.log('Datos de asignaturas:', response.data);
         setSubjects(response.data);  // Actualizar el estado con los datos recibidos
       } catch (error) {
         console.error('Error fetching subjects:', error);
@@ -28,9 +26,6 @@ const ListadoAsignaturaAdmin = () => {
     fetchSubjects();
   }, []);
 
-  console.log('Estado de las asignaturas:', subjects);
-  console.log('Cargando:', loading);
-  console.log('Error:', error);
 
   if (loading) {
     return <p>Cargando respuestas...</p>;
@@ -53,13 +48,11 @@ const ListadoAsignaturaAdmin = () => {
         ) : (
           <ul className="space-y-4">
             {subjects.map((subject, index) => {
-              console.log('Asignatura actual:', subject);
               return (
                 <li key={index} className="border p-4 rounded-lg shadow-md bg-gray-100">
                   <h2 className="text-lg font-semibold text-blue-800 mb-2">{subject.asignatura}</h2>
                   <button
                     onClick={() => {
-                      console.log('Navegando a la ruta de respuestas para:', subject);
                       navigate(`/admin/verRespuestas/asignatura`, { state: { subject } });
                     }}
                     className="bg-[#164a5f] text-white px-4 py-2 rounded-lg shadow hover:bg-[#1f5c71] active:font-extrabold"

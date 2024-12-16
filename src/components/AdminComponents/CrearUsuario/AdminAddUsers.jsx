@@ -44,7 +44,6 @@ const AdminAddUsers = () => {
 
             try {
                 const response = await axios.post("http://localhost:3000/user/create", formData, config);
-                console.log("Usuario creado:", response.data);
                 Tostadas.ToastSuccess('Usuario creado exitosamente');
             } catch (error) {
                 console.error("Error al enviar el formulario:", error);

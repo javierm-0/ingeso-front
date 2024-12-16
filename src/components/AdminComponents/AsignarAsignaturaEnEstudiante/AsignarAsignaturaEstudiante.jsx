@@ -45,7 +45,6 @@ const AsignarAsignaturaEstudiante = () => {
       );
 
       if (response.status === 200) {
-        console.log(`Asignatura ${subject.asignatura} asignada correctamente.`);
 
         // Actualizar el estado local del estudiante
         const updatedStudent = {

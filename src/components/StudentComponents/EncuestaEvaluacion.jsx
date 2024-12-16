@@ -23,11 +23,9 @@ function getAccessToken() {
 function getUserIdFromToken() {
   const accessToken = getAccessToken();
   if (accessToken) {
-    console.log("Hay access token: " + accessToken);
     try {
       const decodedToken = jwtDecode(accessToken);
       if (decodedToken.exp * 1000 > Date.now()) {
-        console.log("userId: ",decodedToken.sub);
         return decodedToken.sub;  // Devuelve el userId (sub) del token
       } else {
         console.log("El token ha expirado");
@@ -99,7 +97,6 @@ const options = [//esto es constante, se guardara en codigo
     }
   }, []);
   
-  //console.log("cuestionario: ",JSON.stringify(cuestionario,null,2));
   const navigate = useNavigate(); // Hook de react-router-dom para redirigir
   const [dimensionCeroData, setDimensionCeroData] = useState([]);
   const [dimensionUnoData, setDimensionUnoData] = useState([]);
@@ -126,7 +123,6 @@ const options = [//esto es constante, se guardara en codigo
 
 const handleSubmit = async () => {
   setIsBlocked(true);
-  console.log(responses);
   if(responses.responses === null || responses.responses === undefined || responses.responses.length === 0){
     Tostadas.ToastWarning("No hay absolutamente nada respondido aca");
     setTimeout(() => {
@@ -143,7 +139,6 @@ const handleSubmit = async () => {
   }
 
   //si pasa la validacion, enviar el payload
-  //console.log('Payload que se enviará:', JSON.stringify(responses, null, 2));
   try {
     Tostadas.ToastInfo("Enviando respuestas...");
     const response = await axios.post('http://localhost:4000/responses/', responses);
@@ -156,7 +151,6 @@ const handleSubmit = async () => {
 
     // Llamada para completar la asignación
     const completeResponse = await axios.post('http://localhost:4000/survey-assignments/complete', completeAssignmentPayload);
-    console.log("Survey assignment marked as complete:", completeResponse.data);
 
     // Si todo sale bien
     Tostadas.ToastSuccess("Respuestas enviadas con éxito");
