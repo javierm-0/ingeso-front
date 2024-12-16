@@ -32,7 +32,7 @@ const TeacherSidebar = () =>{
     };
 
     return(
-        <div className="w-72">
+        <div className="fixed w-72 h-screen">
             <div className={`bg-[#164a5f] h-screen p-5 pt-8 ${isOpen? "w-72":"w-28"} duration-300 relative rounded-tr-2xl`}>
                 <BsArrowLeftSquareFill className={`bg-[#164a5f] text-gray-200 
                 text-3xl rounded-full absolute -right-3.5 top-10 border

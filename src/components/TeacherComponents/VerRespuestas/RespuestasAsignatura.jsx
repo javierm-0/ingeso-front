@@ -125,7 +125,7 @@ const RespuestasAsignatura = () => {
 
   return (
     <div className="flex">
-      <div className='fw-1/5'>
+      <div className='w-1/5'>
         <TeacherSidebar />
       </div>
 
