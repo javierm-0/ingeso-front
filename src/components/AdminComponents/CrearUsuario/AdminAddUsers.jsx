@@ -17,6 +17,18 @@ const AdminAddUsers = () => {
 
     const [rutValido, setRutValido] = useState(true);
 
+    const resetFormData = () => {
+        setFormData({
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            rut: '',
+            role: 'student', // Valor por defecto
+        });
+        setRutValido(true);
+    };
+
     const handleChange = (e) => {
         const {name,value} = e.target;
         setFormData({
@@ -45,6 +57,7 @@ const AdminAddUsers = () => {
             try {
                 const response = await axios.post("http://localhost:3000/user/create", formData, config);
                 Tostadas.ToastSuccess('Usuario creado exitosamente');
+                resetFormData();
             } catch (error) {
                 console.error("Error al enviar el formulario:", error);
                 Tostadas.ToastError('Hubo un error al crear el usuario');
