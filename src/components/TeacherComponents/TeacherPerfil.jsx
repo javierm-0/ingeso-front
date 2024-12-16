@@ -68,7 +68,7 @@ const TeacherPerfil =() =>{
     return (
         <div className="flex">
             <div className='fixed top-0 left-0 w-72 h-screen'>
-                <TeacherSidebar></TeacherSidebar>
+                <TeacherSidebar />
             </div>
 
             <div className='ml-80 mt-12'>
